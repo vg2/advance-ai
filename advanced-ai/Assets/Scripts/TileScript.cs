@@ -6,6 +6,5 @@ public class TileScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        
     }
 }
