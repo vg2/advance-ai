@@ -6,9 +6,11 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
 
     /*
-     *Author: Lance Govender (LG), Sihle Sithungu (SS), Fortune Chidzikwe (FC)
-     *Discription: Performs movement stats for each robots using team wide immunological computation elements
+     * Author: Lance Govender (LG), Sihle Sithungu (SS), Fortune Chidzikwe (FC)
+     * Discription: Performs movement stats for each robots using team wide immunological computation elements
+     * Behavour Parameters : Aggression - biases the bots to attack over run
     */
+    private int Aggression;
 
     private int RandomNumber(int Min, int Max)
     {
@@ -28,13 +30,13 @@ public class Movement : MonoBehaviour {
         // ---------------------------------------- SS ----------------------------------------------
         // Split into team A and team B
         // Collect postions of robots per team and perform movement (MovementStratGeneration)
-        // ------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------ // End
 
 
         // ---------------------------------------- FC ----------------------------------------------
         // update all postions
         // Perform collision where robots are moving into the same postion
-        // ------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------ // End
     }
 
     // ---------------------------------------- LG ----------------------------------------------
@@ -51,13 +53,21 @@ public class Movement : MonoBehaviour {
         return Postions;
     }
 
-    
+    private OrigamiRobot EvaluateMove()
+    {
+        OrigamiRobot newOR = null;
+        // Perform rotation check
+
+        // perform next movement
+        return newOR;
+        
+    }
 
     //----------------------------------------------------------------------------------------- (on hold for now)
     // create and initalise Collision Class
     //TBD
 
-    //-----------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------- // End
 
 
     // Use this for initialization
