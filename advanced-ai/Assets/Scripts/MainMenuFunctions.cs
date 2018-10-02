@@ -12,6 +12,11 @@ public class MainMenuFunctions : MonoBehaviour {
 
     public void ExitSim() 
     {
+        Application.Quit();
+    }
 
+    public void UpdateSettings()
+    {
+        Debug.Log("Settings Updated");
     }
 }
