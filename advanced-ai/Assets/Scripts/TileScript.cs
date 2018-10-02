@@ -15,11 +15,12 @@ public class TileScript : MonoBehaviour
     public static float WORLD_MAX_X = 20f;
     public static float WORLD_MAX_Y = 0f;
     public static float WORLD_MAX_Z = 20f;
+    public OrigamiRobot robot;
 
     // Use this for initialization
     void Start ()
     {
-        OrigamiRobot robot = new OrigamiRobot(0);
+        robot = new OrigamiRobot(0);
         robot.GenerateRobot();
     }
 }

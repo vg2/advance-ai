@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
+    /*
+     *Author: Lance Govender 
+     *Discription:
+     *
+     */
+
 	// Use this for initialization
 	void Start () {
 		
