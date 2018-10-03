@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class OrigamiRobot
 {
@@ -35,26 +36,37 @@ public class OrigamiRobot
          * for new triangles to link to.
          */
         List<Triangle> candidateLinks = new List<Triangle>();
+        int numPartsGenerated = 0; //Keeps track of the number of parts generated so far.
 
-        //Generate the first triangle using the tile info.
+        //---Generate the first triangle using the tile info.---//
         Vector3 scale = tileInfo.localScale;
-        Vector3 vertexA = new Vector3(Random.Range(position.x - scale.x, position.x + scale.x), Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
-        Vector3 vertexB = new Vector3(Random.Range(position.x - scale.x, position.x + scale.x), Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
-        Vector3 vertexC = new Vector3(Random.Range(position.x - scale.x, position.x + scale.x), Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
+        Vector3 vertexA = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
+        Vector3 vertexB = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
+        Vector3 vertexC = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
         Triangle t = new Triangle(vertexA, vertexB, vertexC);
         parts[0] = t;
+        numPartsGenerated++;
         candidateLinks.Add(t);
-
-        for(int i = 1; i < parts.Length; i++)
+        
+        //--Generate the rest of the parts.--//
+        while(numPartsGenerated < numParts)
         {
-            int r = Random.Range(0, 3);
-            switch (r)
-            {
-                case 0:
+            int rIndex = UnityEngine.Random.Range(0, candidateLinks.Count); //Pick a random triangle from this list.
+            int numVacantSides = VacantSides(candidateLinks[rIndex]);
+            int rSide = UnityEngine.Random.Range(0, numVacantSides); //Pick a random side to extend/link to.
 
-                    break;
+            switch (rSide)
+            {
+                case 0: //
+                    vert
             }
+            numPartsGenerated++;
         }
+    }
+
+    private int VacantSides(Triangle triangle)
+    {
+        throw new NotImplementedException();
     }
 
     public Dictionary<Triangle, List<Triangle>> getBodyMakeUp()
