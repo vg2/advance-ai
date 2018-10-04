@@ -7,6 +7,7 @@ public class OrigamiRobot
     private Vector3 position;
     private Vector3 orientation;
     private int team;
+    public int fitness = 1000;
 
     public OrigamiRobot(int team)
     {
