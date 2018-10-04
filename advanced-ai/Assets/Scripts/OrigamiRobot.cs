@@ -18,8 +18,10 @@ public class OrigamiRobot
 
     public OrigamiRobot(int team, int numParts, Transform tileInfo)
     {
+        this.numParts = numParts;
         this.team = team; //the robot's team or colony.
         this.tileInfo = tileInfo;
+
         parts = new Triangle[numParts]; //initial number of triangles the robot is made up of.
         position = tileInfo.position; //inital robot's position.
         InitializeParts();
@@ -32,56 +34,65 @@ public class OrigamiRobot
      */
     private void InitializeParts()
     {
-        /*
-         * This lists stores triangles that still have "vacant" sides
-         * for new triangles to link to.
-         */
+        //This lists stores triangles that still have "vacant" sides for new triangles to link to.
         List<Triangle> candidateLinks = new List<Triangle>();
+
         int numPartsGenerated = 0; //Keeps track of the number of parts generated so far.
 
-        //---Generate the first triangle using the tile info.---//
-        Vector3 scale = tileInfo.localScale;
-        Vector3 vertexA = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
-        Vector3 vertexB = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
-        Vector3 vertexC = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), Random.Range(position.z + scale.z, position.z - scale.z));
-        Triangle t = new Triangle(vertexA, vertexB, vertexC);
-        parts[0] = t;
+        Triangle t = RandTriangle(); //Generate the first triangle.
+        parts[0] = t; //Add the new triangle to the parts array.
         numPartsGenerated++;
-        candidateLinks.Add(t);
-        
+        candidateLinks.Add(t); //The new triangle is now a candidate link.
         //--Generate the rest of the parts.--//
-        while(numPartsGenerated < numParts)
+        while (numPartsGenerated < numParts && candidateLinks.Count > 0)
         {
-            int rIndex = UnityEngine.Random.Range(0, candidateLinks.Count); //Pick a random triangle from this list.
-            int numVacantSides = VacantSides(candidateLinks[rIndex]);
-            int rSide = UnityEngine.Random.Range(0, numVacantSides); //Pick a random side to extend/link to.
+            int rMySide = UnityEngine.Random.Range(0, 3); //The side the new triangle is going to use to form a link.
+            Triangle temp = RandTriangle(); //Generate a triangle with random vertices.
+            int rIndex = UnityEngine.Random.Range(0, candidateLinks.Count); //Pick a random triangle from from the list of candidate links.
+            candidateLinks[rIndex].LinkNeighbour(temp, rMySide + 1);
 
-            switch (rSide)
-            {
-                case 0: //
-                    vert
-            }
+            parts[numPartsGenerated] = temp;
+            candidateLinks.Add(temp);
+            UpdateCandidateLinks(candidateLinks);//Remove triangles that have no vacant sides anymore.
             numPartsGenerated++;
         }
     }
 
-    private int VacantSides(Triangle triangle)
+    private Triangle RandTriangle()
     {
-        throw new NotImplementedException();
+        //---Generate a triangle using the tile info.---//
+        Vector3 scale = tileInfo.localScale;
+        Vector3 vertexA = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), UnityEngine.Random.Range(position.z + scale.z, position.z - scale.z));
+        Vector3 vertexB = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), UnityEngine.Random.Range(position.z + scale.z, position.z - scale.z));
+        Vector3 vertexC = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), UnityEngine.Random.Range(position.z + scale.z, position.z - scale.z));
+        Triangle t = new Triangle(vertexA, vertexB, vertexC);
+        return t;
     }
 
-    public Dictionary<Triangle, List<Triangle>> getBodyMakeUp()
+    //--This function removes Triangles that no longer have vacant sides from candidate links.--//
+    private void UpdateCandidateLinks(List<Triangle> candidateLinks)
+    {
+        for (int i = 0; i < candidateLinks.Count; i++)
+        {
+            if (candidateLinks[i].GetVacantSides().Count == 0)
+            {
+                candidateLinks.RemoveAt(i);
+            }
+        }
+    }
+
+    public Dictionary<Triangle, List<Triangle>> GetLinks()
     {
         Dictionary<Triangle, List<Triangle>> pairs = new Dictionary<Triangle, List<Triangle>>();
         for (int i = 0; i < parts.Length; i++)
         {
             List<Triangle> neighbours = new List<Triangle>();
-            for (int j = 0; j < parts.Length; i++)
+            foreach(Triangle n in parts[i].GetNeighbours())
             {
-
+                neighbours.Add(n);
             }
+            pairs.Add(parts[i], neighbours);
         }
-
         return pairs;
     }
 
