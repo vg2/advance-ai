@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +37,20 @@ public class Movement : MonoBehaviour {
         // update all postions
         // Perform collision where robots are moving into the same postion
         // ------------------------------------------------------------------------------------------ // End
+        
+        //check collision distance between bots
+
+        for(Vector3 botAPosition : TeamAPostions)
+        {
+            for(Vector3 botBPosition : TeamBPostions)
+            {
+                distance = Vector3.Distance(botAPosition, botBPosition);
+                if(distance <= minCollisionDistance){
+                    Collision.Collide(botAPosition, botBPosition);
+                }
+            }
+        }
+
     }
 
     // ---------------------------------------- LG ----------------------------------------------
