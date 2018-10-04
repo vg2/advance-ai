@@ -17,10 +17,21 @@ public class TileScript : MonoBehaviour
     public static float WORLD_MAX_Z = 20f;
     public OrigamiRobot robot;
 
+    GameObject[] upSide;
+    GameObject[] downSide;
+
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         robot = new OrigamiRobot(0);
         robot.GenerateRobot();
+        upSide = GameObject.FindGameObjectsWithTag("UpTag");
+        downSide = GameObject.FindGameObjectsWithTag("DownTag");
+
+        for (int i = 0; i < upSide.Length; i++)
+        {
+            OrigamiRobot robot = new OrigamiRobot(0, 10, upSide[i].transform);
+            Triangle[] robotParts = robot.getBody();
+        }
     }
 }
