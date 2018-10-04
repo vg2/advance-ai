@@ -15,6 +15,7 @@ public class TileScript : MonoBehaviour
     public static float WORLD_MAX_X = 20f;
     public static float WORLD_MAX_Y = 0f;
     public static float WORLD_MAX_Z = 20f;
+    public OrigamiRobot robot;
 
     GameObject[] upSide;
     GameObject[] downSide;
@@ -24,6 +25,7 @@ public class TileScript : MonoBehaviour
     void Start()
     {
         robots = new List<OrigamiRobot>();
+
         upSide = GameObject.FindGameObjectsWithTag("UpTag");
         downSide = GameObject.FindGameObjectsWithTag("DownTag");
 
