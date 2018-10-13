@@ -18,7 +18,16 @@ namespace Assets.Scripts.Evolution
             for (var i = 0; i < childProps.Length; i++)
             {
                 var selectedParent = PickRandomParent(parents);
-                childProps[i] = selectedParent.getBody()[i];
+                var parentProp = selectedParent.getBody()[i];
+
+                //initialise child props with random parent prop
+                childProps[i] = parentProp;
+
+                var currentChildProp = childProps[i];
+
+                currentChildProp.SetVertexA(PickRandomParent(parents).getBody()[i].GetVertexA());
+                currentChildProp.SetVertexB(PickRandomParent(parents).getBody()[i].GetVertexB());
+                currentChildProp.SetVertexC(PickRandomParent(parents).getBody()[i].GetVertexC());
             }
 
             child.SetBody(childProps);
