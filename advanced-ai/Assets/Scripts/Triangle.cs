@@ -6,7 +6,8 @@ using System;
 public class Triangle
 {
     /*
-     * a, b and c are the triangle's vertices.
+     * Author: Siphesihle Sithungu
+     * Description: This class represents a triangle. Each vertex of a triangle is a Vector3.
      */
     private Vector3 vertexA;
     private Vector3 vertexB;

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System;
 
 /*
- * Part of Robot/Origin Structure
+ * Author: Siphesihle Sithungu, Anthony Kolenic, Martin Messe
+ * Description: This class represents an Origami Robot.
+ * A robot is an array of triangles.
  */
 public class OrigamiRobot
 {
@@ -76,7 +78,7 @@ public class OrigamiRobot
         return new Vector3(0,0,0);
 	}
 		
-
+    //--Function for generating a triangle with random vertices.--//
     private Triangle RandTriangle()
     {
         //---Generate a triangle using the tile info.---//
