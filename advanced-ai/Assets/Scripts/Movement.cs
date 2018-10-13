@@ -25,8 +25,6 @@ public class Movement : MonoBehaviour {
         Vector3[] TeamAPostions; // will be the next postion of every robot in team A
         Vector3[] TeamBPostions; // will be the next postion of every robot in team B
 
-
-
         // ---------------------------------------- SS ----------------------------------------------
         // Split into team A and team B
         // Collect postions of robots per team and perform movement (MovementStratGeneration)

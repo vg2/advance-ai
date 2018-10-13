@@ -3,6 +3,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
+/*
+ * Part of Robot/Origin Structure
+ */
 public class OrigamiRobot
 {
     private Triangle[] parts;
@@ -28,9 +31,8 @@ public class OrigamiRobot
     }
 
     /*
-     * This function initializes the triangles by setting their vertices.
-     * The method also ensures that the vertices are within the hexagon
-     * representing the robot's position.
+     * This function initializes the triangles by assigning values to their vertices.
+     * The method also ensures that the vertices are within one hexagon/tile representing the robot's position.
      */
     private void InitializeParts()
     {
@@ -57,6 +59,23 @@ public class OrigamiRobot
             numPartsGenerated++;
         }
     }
+	
+	/*
+	 * This function returns the robot's rotation.
+	 */
+	public Vector3 GetRotation()
+	{
+        return new Vector3(0,0,0);
+	}
+	
+	/*
+	 * This function returns the robot's position.
+	 */
+	public Vector3 GetPosition()
+	{
+        return new Vector3(0,0,0);
+	}
+		
 
     private Triangle RandTriangle()
     {
@@ -81,6 +100,10 @@ public class OrigamiRobot
         }
     }
 
+	/*
+	 * The following function returns the links between the triangles.
+	 * Each key is a triangle belonging to the robot. Each value is a list of the triangle's neighbours.
+	 */
     public Dictionary<Triangle, List<Triangle>> GetLinks()
     {
         Dictionary<Triangle, List<Triangle>> pairs = new Dictionary<Triangle, List<Triangle>>();
@@ -94,14 +117,6 @@ public class OrigamiRobot
             pairs.Add(parts[i], neighbours);
         }
         return pairs;
-    }
-
-    /*
-     * The following function returns the object's position in the game world.
-     */
-    public Vector3 getPosition()
-    {
-        return position;
     }
 
     public void setPosition(Vector3 position)
