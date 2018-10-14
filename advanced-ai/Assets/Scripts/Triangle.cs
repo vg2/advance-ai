@@ -166,4 +166,14 @@ public class Triangle
     {
         this.vertexC = vertexC;
     }
+
+    public static Triangle GenerateRandomTriangle(Transform tileInfo, Vector3 currentPosition)
+    {
+        Vector3 scale = tileInfo.localScale;
+        Vector3 vertexA = new Vector3(UnityEngine.Random.Range(currentPosition.x - scale.x, currentPosition.x + scale.x), UnityEngine.Random.Range(currentPosition.y - scale.y, currentPosition.y + scale.y), UnityEngine.Random.Range(currentPosition.z + scale.z, currentPosition.z - scale.z));
+        Vector3 vertexB = new Vector3(UnityEngine.Random.Range(currentPosition.x - scale.x, currentPosition.x + scale.x), UnityEngine.Random.Range(currentPosition.y - scale.y, currentPosition.y + scale.y), UnityEngine.Random.Range(currentPosition.z + scale.z, currentPosition.z - scale.z));
+        Vector3 vertexC = new Vector3(UnityEngine.Random.Range(currentPosition.x - scale.x, currentPosition.x + scale.x), UnityEngine.Random.Range(currentPosition.y - scale.y, currentPosition.y + scale.y), UnityEngine.Random.Range(currentPosition.z + scale.z, currentPosition.z - scale.z));
+        Triangle t = new Triangle(vertexA, vertexB, vertexC);
+        return t;
+    }
 }
