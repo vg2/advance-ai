@@ -3,7 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Movement : MonoBehaviour {
+
+    float distance;
+    int minCollisionDistance;
+
+
 
     /*
      * Author: Lance Govender (LG), Sihle Sithungu (SS), Fortune Chidzikwe (FC)
@@ -22,8 +28,8 @@ public class Movement : MonoBehaviour {
     // MoveRobots
     public void MoveRobots(OrigamiRobot[] or)
     {
-        Vector3[] TeamAPostions; // will be the next postion of every robot in team A
-        Vector3[] TeamBPostions; // will be the next postion of every robot in team B
+        Vector3[] TeamAPostions = null; // will be the next postion of every robot in team A
+        Vector3[] TeamBPostions = null; // will be the next postion of every robot in team B
 
 
 
@@ -40,13 +46,14 @@ public class Movement : MonoBehaviour {
         
         //check collision distance between bots
 
-        for(Vector3 botAPosition : TeamAPostions)
+        foreach(Vector3 botAPosition in TeamAPostions)
         {
-            for(Vector3 botBPosition : TeamBPostions)
+            foreach(Vector3 botBPosition in TeamBPostions)
             {
                 distance = Vector3.Distance(botAPosition, botBPosition);
+
                 if(distance <= minCollisionDistance){
-                    Collision.Collide(botAPosition, botBPosition);
+                    //TriangleCollision.OnCollisionEner(botAPosition, botBPosition);
                 }
             }
         }
@@ -86,11 +93,11 @@ public class Movement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        
+    }
+    
+    // Update is called once per frame
+    void Update () {
+        
+    }
 }

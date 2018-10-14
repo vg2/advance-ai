@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class Triangle
+public class Triangle 
 {
     /*
      * a, b and c are the triangle's vertices.
@@ -20,8 +20,8 @@ public class Triangle
         this.vertexB = vertexB;
         this.vertexC = vertexC;
 
-        neighbours = new List<Triangle>(3);
-        vacantSides = new List<int>(3)
+		neighbours = new List<Triangle>(3);
+		vacantSides = new List<int>(3)
         {
             1,
             2,
@@ -31,13 +31,13 @@ public class Triangle
 
     public bool LinkNeighbour(Triangle n, int sideToUse)
     {
-        if (neighbours.Contains(n))
+		if (neighbours.Contains(n))
             return false;
 
-        if (vacantSides.Count == 0)
+		if (vacantSides.Count == 0)
             return false;
 
-        if (vacantSides.Contains(1))
+		if (vacantSides.Contains(1))
         {
             switch (sideToUse)
             {
@@ -73,9 +73,9 @@ public class Triangle
                     n.SetVertexC(vertexC);
                     break;
             }
-            vacantSides.Remove(2);
+			vacantSides.Remove(2);
         }
-        else if (vacantSides.Contains(3))
+		else if (vacantSides.Contains(3))
         {
             switch (sideToUse)
             {
@@ -92,11 +92,11 @@ public class Triangle
                     n.SetVertexC(vertexC);
                     break;
             }
-            vacantSides.Remove(3);
+			vacantSides.Remove(3);
         }
 
-        n.GetNeighbours().Add(this);
-        n.vacantSides.Remove(sideToUse); //We have to remove the side we used from the new triangle's vacant sides.
+		n.GetNeighbours().Add(this);
+		n.vacantSides.Remove(sideToUse); //We have to remove the side we used from the new triangle's vacant sides.
         neighbours.Add(n);
         return true;
     }
@@ -116,16 +116,16 @@ public class Triangle
 
     public List<int> GetVacantSides()
     {
-        return vacantSides;
+		return vacantSides;
     }
 
     public List<Vector3> GetVertices()
     {
         List<Vector3> vertices = new List<Vector3>
         {
-            vertexA,
-            vertexB,
-            vertexC
+			vertexA,
+			vertexB,
+			vertexC
         };
 
         return vertices;
@@ -133,36 +133,38 @@ public class Triangle
 
     public List<Triangle> GetNeighbours()
     {
-        return neighbours;
+		return neighbours;
     }
 
     public Vector3 GetVertexA()
     {
-        return vertexA;
+		return vertexA;
     }
 
     public Vector3 GetVertexB()
     {
-        return vertexB;
+		return vertexB;
     }
 
     public Vector3 GetVertexC()
     {
-        return vertexC;
+		return vertexC;
     }
 
     public void SetVertexA(Vector3 vertexA)
     {
-        this.vertexA = vertexA;
+		this.vertexA = vertexA;
     }
 
     public void SetVertexB(Vector3 vertexB)
     {
-        this.vertexB = vertexB;
+		this.vertexB = vertexB;
     }
 
     public void SetVertexC(Vector3 vertexC)
     {
-        this.vertexC = vertexC;
+		this.vertexC = vertexC;
     }
+
+  
 }
