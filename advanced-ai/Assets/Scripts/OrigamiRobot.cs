@@ -77,6 +77,11 @@ public class OrigamiRobot
 	{
         return new Vector3(0,0,0);
 	}
+
+    public Transform GetRobotTransformProperties()
+    {
+        return this.tileInfo;
+    }
 		
     //--Function for generating a triangle with random vertices.--//
     private Triangle RandTriangle()
@@ -119,6 +124,11 @@ public class OrigamiRobot
             pairs.Add(parts[i], neighbours);
         }
         return pairs;
+    }
+
+    public void SetBody(Triangle[] bodyProperties)
+    {
+        this.parts = bodyProperties;
     }
 
     public void setPosition(Vector3 position)
