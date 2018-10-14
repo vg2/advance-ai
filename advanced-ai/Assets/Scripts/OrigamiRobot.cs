@@ -85,13 +85,7 @@ public class OrigamiRobot
     //--Function for generating a triangle with random vertices.--//
     private Triangle RandTriangle()
     {
-        //---Generate a triangle using the tile info.---//
-        Vector3 scale = tileInfo.localScale;
-        Vector3 vertexA = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), UnityEngine.Random.Range(position.z + scale.z, position.z - scale.z));
-        Vector3 vertexB = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), UnityEngine.Random.Range(position.z + scale.z, position.z - scale.z));
-        Vector3 vertexC = new Vector3(UnityEngine.Random.Range(position.x - scale.x, position.x + scale.x), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), UnityEngine.Random.Range(position.z + scale.z, position.z - scale.z));
-        Triangle t = new Triangle(vertexA, vertexB, vertexC);
-        return t;
+        return Triangle.GenerateRandomTriangle(tileInfo, position);
     }
 
     //--This function removes Triangles that no longer have vacant sides from candidate links.--//
