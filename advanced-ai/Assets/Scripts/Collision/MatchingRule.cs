@@ -12,6 +12,8 @@ namespace AssemblyCSharp.Assets.Scripts.Collision
         {
         }
 
+        
+        // using real valued representation (Vector3) for the detector so matching rule is Eucleadian
         public static double EuclideanDistance(Vector3 a, Vector3 b){
             return Vector3.Distance(a,b);
         }

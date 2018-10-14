@@ -40,23 +40,17 @@ public class Movement : MonoBehaviour {
 
 
         // ---------------------------------------- FC ----------------------------------------------
-        // update all postions
-        // Perform collision where robots are moving into the same postion
+        // 
+        // Perform collision where robots are moving into the same postion - handled in Robot Itself
+
+        //update all postion
         // ------------------------------------------------------------------------------------------ // End
-        
-        //check collision distance between bots
 
-        foreach(Vector3 botAPosition in TeamAPostions)
-        {
-            foreach(Vector3 botBPosition in TeamBPostions)
-            {
-                distance = Vector3.Distance(botAPosition, botBPosition);
+        //updating each robot position
 
-                if(distance <= minCollisionDistance){
-                    //TriangleCollision.OnCollisionEner(botAPosition, botBPosition);
-                }
-            }
-        }
+
+        UpdatePosition(or, TeamAPostions, TeamBPostions);
+       
 
     }
 
@@ -99,5 +93,15 @@ public class Movement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         
+    }
+    
+    
+    // TODO - change this method to acccept teams and then for each team loop through all members and update position
+    public void UpdatePosition(OrigamiRobot[] or,  Vector3[] TeamAPostions, Vector3[] TeamBPostions)
+    {
+        for (int i = 0; i < or.Length; i++)
+        {
+            TeamAPostions[i] = or[i].getPosition();
+        }
     }
 }

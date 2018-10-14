@@ -24,12 +24,12 @@ namespace AssemblyCSharp.Assets.Scripts.Collision
                
             int repoitreSize = robots.Length;
             // team variable used to generate self set 
-            float [] selfRange = GenerateSelfSetRange(team, repoitreSize);
+            float [] selfRange = GenerateSelfSetRange(team);
             
             // generate detectors equal to repotre size
-            while(repoitreSize <=0){
+            while(repoitreSize > 0){
 
-                Vector3 dector = GenerateRandomDetector();
+                Vector3 dector = GenerateRandomDetector(selfRange);
 
                 //valid detector does not match self
                 if(!matches(dector,selfRange ))
@@ -42,43 +42,57 @@ namespace AssemblyCSharp.Assets.Scripts.Collision
 
             //for each robot set detector
             for (int i = 0; i < robots.Length; i++){
-               // robots[i].setDetector(validDetectors[i]);
+               robots[i].SetDetector(validDetectors[i]);
             }
            
-
+            
          
         }
 
-        private Boolean NonSelfDetection(OrigamiRobot self, OrigamiRobot other) // other is the sample
+        public static Boolean NonSelfDetection(OrigamiRobot self, OrigamiRobot other) // other is the sample
         {
             
            
-          // TODO these new vectors should be the valid detectors a value to be put in robot?  
-            if (MatchingRule.EuclideanDistance(new Vector3(1,2,3), new Vector3(1,2,3) ) < 0.5 )
+          // TODO - decide on threshold currently at 0.5  
+            if (MatchingRule.EuclideanDistance(self.GetDetector(), other.GetDetector()) < 0.5 )
             {
-                return false; 
+                // self
+                return true; 
             }
             else
             {
-                return true;
+                //non self
+                return false;
             }
         }
         
         
-        private Vector3 GenerateRandomDetector()
+        private Vector3 GenerateRandomDetector(float [] range)
         {
-            return  new Vector3(UnityEngine.Random.Range(0.1f, 0.5f), UnityEngine.Random.Range(position.y - scale.y, position.y + scale.y), UnityEngine.Random.Range(position.z + scale.z, position.z - scale.z));
+           
+            return  new Vector3(UnityEngine.Random.Range(range[0], range[1]), UnityEngine.Random.Range(range[0], range[1]), UnityEngine.Random.Range(range[0], range[1]));
         }
         
-        private Boolean matches(Vector3 dector, float[] self)
+        private Boolean matches(Vector3 detector, float[] self)
         {
-            
+
             //TODO
-            return false;  
+
+            float xpos = detector.x;
+            float ypos = detector.y;
+           
+            if((xpos <= self[1] && xpos >= self[0] ) && (ypos <= self[1] && ypos >= self[0])) 
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         
         
-        private float [] GenerateSelfSetRange(int team, int size){
+        private float [] GenerateSelfSetRange(int team)
+        {
 
             float lowerBound = 0f;
             float upperBound  = 0f;
@@ -94,6 +108,8 @@ namespace AssemblyCSharp.Assets.Scripts.Collision
            
             return new float[] {lowerBound, upperBound };
         }
+        
+      
     }
 
 

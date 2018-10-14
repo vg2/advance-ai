@@ -2,13 +2,15 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System;
+using AssemblyCSharp.Assets.Scripts.Collision;
 
-public class OrigamiRobot
+public class OrigamiRobot : MonoBehaviour
 {
     private Triangle[] parts;
 
     private Vector3 position;
     private Vector3 orientation;
+	private Vector3 detector;
 
     private int team;
     public int fitness = 1000;
@@ -124,6 +126,16 @@ public class OrigamiRobot
         this.team = team;
     }
 
+	public void SetDetector(Vector3 detector)
+	{
+		this.detector = detector;
+	}
+
+	public Vector3 GetDetector()
+	{
+		return detector;
+	}
+    
     public int GetNumParts()
     {
         return numParts;
@@ -133,4 +145,20 @@ public class OrigamiRobot
     {
         this.numParts = numParts;
     }
+
+	public void OnCollisionEnter(Collision collision){
+		//  TODO name of the robot
+
+		OrigamiRobot other = (OrigamiRobot)collision.gameObject.GetComponent(typeof(OrigamiRobot));
+		Boolean isEnemy = RobotCollision.IsSelf(this, other);
+
+		if(isEnemy)
+		{ //attack
+			RobotCollision.Attack(this, other);
+		}else{
+			//move away
+
+            //TODO
+		}
+	}
 }
