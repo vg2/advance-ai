@@ -19,8 +19,6 @@ public class MainMenuFunctions : MonoBehaviour {
 
     public void UpdateSettings()
     {
-        
-
         Toggle trainMode = GameObject.Find("Canvas/SettingObject/TrainMode").GetComponent<Toggle>();
         bool mode = trainMode.isOn;
 

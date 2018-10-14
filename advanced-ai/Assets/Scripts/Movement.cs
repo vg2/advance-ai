@@ -22,34 +22,60 @@ public class Movement : MonoBehaviour {
     // MoveRobots
     public void MoveRobots(OrigamiRobot[] or)
     {
-        Vector3[] TeamAPostions; // will be the next postion of every robot in team A
-        Vector3[] TeamBPostions; // will be the next postion of every robot in team B
-
-
+        List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
+        List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
 
         // ---------------------------------------- SS ----------------------------------------------
-        // Split into team A and team B
-        // Collect postions of robots per team and perform movement (MovementStratGeneration)
-        // ------------------------------------------------------------------------------------------ // End
+        /*
+         *Description: Split into team A and team B
+         * Collect postions of robots per team and perform movement (MovementStratGeneration)
+         */
 
+        //-- Split into Team A and Team B and collect positions of the robots. --//
+        List<OrigamiRobot> teamA = new List<OrigamiRobot>();
+        List<OrigamiRobot> teamB = new List<OrigamiRobot>();
+        TeamAPositions = new List<Vector3>();
+        TeamBPositions = new List<Vector3>();
+
+        for (int i = 0; i < or.Length; i++)
+        {
+            if (or[i].GetTeam() == 0)
+            {
+                //Robot belongs to Team A.
+                teamA.Add(or[i]);
+                TeamAPositions.Add(or[i].GetPosition());
+            }
+
+            else
+            {
+                //Robot belongs to Team B.
+                teamB.Add(or[i]);
+                TeamBPositions.Add(or[i].GetPosition());
+            }  
+        }
+
+        //-- Move robots. --//
+
+
+        // ------------------------------------------------------------------------------------------ // End
 
         // ---------------------------------------- FC ----------------------------------------------
         // update all postions
         // Perform collision where robots are moving into the same postion
         // ------------------------------------------------------------------------------------------ // End
-        
+
         //check collision distance between bots
 
-        for(Vector3 botAPosition : TeamAPostions)
-        {
-            for(Vector3 botBPosition : TeamBPostions)
-            {
-                distance = Vector3.Distance(botAPosition, botBPosition);
-                if(distance <= minCollisionDistance){
-                    Collision.Collide(botAPosition, botBPosition);
-                }
-            }
-        }
+        //for(Vector3 botAPosition : TeamAPostions)
+        //{
+        //    for(Vector3 botBPosition : TeamBPostions)
+        //    {
+        //        distance = Vector3.Distance(botAPosition, botBPosition);
+        //        if(distance <= minCollisionDistance){
+        //            Collision.Collide(botAPosition, botBPosition);
+        //        }
+        //    }
+        //}
 
     }
 

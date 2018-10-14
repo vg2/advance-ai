@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/*
+ * Author: Siphesihle Sithungu
+ * Description: This is the game world.
+ */
 public class TileScript : MonoBehaviour
 {
     /*

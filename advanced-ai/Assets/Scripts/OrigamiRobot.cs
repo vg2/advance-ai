@@ -3,13 +3,17 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
+/*
+ * Author: Siphesihle Sithungu, Anthony Kolenic, Martin Messe
+ * Description: This class represents an Origami Robot.
+ * A robot is an array of triangles.
+ */
 public class OrigamiRobot
 {
     private Triangle[] parts;
 
     private Vector3 position;
     private Vector3 orientation;
-
     private int team;
     public int fitness = 1000;
     private int numParts;
@@ -28,9 +32,8 @@ public class OrigamiRobot
     }
 
     /*
-     * This function initializes the triangles by setting their vertices.
-     * The method also ensures that the vertices are within the hexagon
-     * representing the robot's position.
+     * This function initializes the triangles by assigning values to their vertices.
+     * The method also ensures that the vertices are within one hexagon/tile representing the robot's position.
      */
     private void InitializeParts()
     {
@@ -57,7 +60,29 @@ public class OrigamiRobot
             numPartsGenerated++;
         }
     }
+	
+	/*
+	 * This function returns the robot's rotation.
+	 */
+	public Vector3 GetRotation()
+	{
+        return new Vector3(0,0,0);
+	}
+	
+	/*
+	 * This function returns the robot's position.
+	 */
+	public Vector3 GetPosition()
+	{
+        return new Vector3(0,0,0);
+	}
 
+    public Transform GetRobotTransformProperties()
+    {
+        return this.tileInfo;
+    }
+		
+    //--Function for generating a triangle with random vertices.--//
     private Triangle RandTriangle()
     {
         //---Generate a triangle using the tile info.---//
@@ -81,6 +106,10 @@ public class OrigamiRobot
         }
     }
 
+	/*
+	 * The following function returns the links between the triangles.
+	 * Each key is a triangle belonging to the robot. Each value is a list of the triangle's neighbours.
+	 */
     public Dictionary<Triangle, List<Triangle>> GetLinks()
     {
         Dictionary<Triangle, List<Triangle>> pairs = new Dictionary<Triangle, List<Triangle>>();
@@ -96,12 +125,9 @@ public class OrigamiRobot
         return pairs;
     }
 
-    /*
-     * The following function returns the object's position in the game world.
-     */
-    public Vector3 getPosition()
+    public void SetBody(Triangle[] bodyProperties)
     {
-        return position;
+        this.parts = bodyProperties;
     }
 
     public void setPosition(Vector3 position)

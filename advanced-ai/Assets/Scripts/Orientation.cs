@@ -10,10 +10,7 @@ public class Orientation : MonoBehaviour {
 
     void Start()
     {
-        //Set the axis the Rigidbody rotates in (100 in the y axis)
         m_EulerAngleVelocity = new Vector3(0, 100, 0);
-
-        //Fetch the Rigidbody from the GameObject with this script attached
         m_Rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -22,6 +19,12 @@ public class Orientation : MonoBehaviour {
         Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.deltaTime);
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
     }
+
+    void fold()
+    {
+
+    }
+
 
 
 
