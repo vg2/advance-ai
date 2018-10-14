@@ -24,6 +24,22 @@ public class DecisionTree
         throw new NotImplementedException();
     }
 
+    private State RandomFunction()
+    {
+        int r = UnityEngine.Random.Range(1, 3);
+        switch (r)
+        {
+            case 1:
+                return State.InCollision;
+            case 2:
+                return State.InForeignColony;
+            case 3:
+                return State.InOwnColony;
+            default:
+                throw new Exception("Invalid choice for State.");
+        }
+    }
+
     private class DTNode
     {
         private DTNode leftChild;
