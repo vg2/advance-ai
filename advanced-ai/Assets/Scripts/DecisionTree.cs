@@ -23,7 +23,8 @@ public class DecisionTree
         //TODO: build a n-deep tree with random functions and decisions.
         throw new NotImplementedException();
     }
-
+    
+    //-- Generates and returns a random State. --//
     private State RandomFunction()
     {
         int r = UnityEngine.Random.Range(1, 3);
@@ -36,7 +37,7 @@ public class DecisionTree
             case 3:
                 return State.InOwnColony;
             default:
-                throw new Exception("Invalid choice for State.");
+                throw new Exception("Invalid choice for a State.");
         }
     }
 
