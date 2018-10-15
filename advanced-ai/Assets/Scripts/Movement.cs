@@ -63,6 +63,11 @@ public class Movement : MonoBehaviour {
 
         // ---------------------------------------- FC ----------------------------------------------
         // update all postions
+        if (antigenStimmulation())
+        {
+            PerformCollison();
+        }
+        
         // Perform collision where robots are moving into the same postion
         // ------------------------------------------------------------------------------------------ // End
 
@@ -79,6 +84,21 @@ public class Movement : MonoBehaviour {
         //    }
         //}
 
+    }
+
+
+    private void antigenStimmulation()
+    {
+
+    }
+
+    private void performCollion()
+    {
+        //----------------------------------------------------------------------------------------- (on hold for now)
+        // create and initalise Collision Class
+        //TBD
+
+        //----------------------------------------------------------------------------------------- // End
     }
 
     // ---------------------------------------- LG ----------------------------------------------
@@ -138,11 +158,7 @@ public class Movement : MonoBehaviour {
         return d;
     }
 
-    //----------------------------------------------------------------------------------------- (on hold for now)
-    // create and initalise Collision Class
-    //TBD
 
-    //----------------------------------------------------------------------------------------- // End
 
 
     // Use this for initialization
