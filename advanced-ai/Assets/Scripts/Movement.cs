@@ -63,7 +63,7 @@ public class Movement : MonoBehaviour {
 
         // ---------------------------------------- FC ----------------------------------------------
         // update all postions
-        if (antigenStimmulation())
+        if (AntigenStimmulation())
         {
             PerformCollison();
         }
@@ -87,12 +87,12 @@ public class Movement : MonoBehaviour {
     }
 
 
-    private void antigenStimmulation()
+    private bool AntigenStimmulation()
     {
-
+        return true;
     }
 
-    private void performCollion()
+    private void PerformCollison()
     {
         //----------------------------------------------------------------------------------------- (on hold for now)
         // create and initalise Collision Class
