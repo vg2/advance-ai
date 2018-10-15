@@ -20,7 +20,7 @@ namespace Assets.Scripts.Evolution
             while(fights < tournamentSize)
             {
                 OrigamiRobot opponent = pop[rnd.Next(0, pop.Count - 1)];
-                if (candidate == opponent) break;
+                if (candidate.Equals(opponent)) break;
 
                 if (opponent.fitness > candidate.fitness) {
                     candidate = opponent;
