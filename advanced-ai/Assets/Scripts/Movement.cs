@@ -117,7 +117,7 @@ public class Movement : MonoBehaviour {
 
     private Detector CreateDetector()
     {
-        Detector d = new Detector():
+        Detector d = new Detector();
 
         return d;
     }
