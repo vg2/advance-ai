@@ -80,6 +80,13 @@ public class Movement : MonoBehaviour {
     }
 
     // ---------------------------------------- LG ----------------------------------------------
+    private struct Detector
+    {
+        float detected;
+        bool friend;
+    }
+
+
     public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots, OrigamiRobot[] OrTeam)
     {
         Vector3[] Postions = new Vector3[OrTeam.Length];
@@ -101,6 +108,18 @@ public class Movement : MonoBehaviour {
         // perform next movement
         return newOR;
         
+    }
+
+    private void NSA()
+    {
+
+    }
+
+    private Detector CreateDetector()
+    {
+        Detector d = new Detector():
+
+        return d;
     }
 
     //----------------------------------------------------------------------------------------- (on hold for now)
