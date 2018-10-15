@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System;
+using Assets.Scripts;
 
 /*
  * Author: Siphesihle Sithungu, Anthony Kolenic, Martin Messe
@@ -14,20 +15,20 @@ public class OrigamiRobot
 
     private Vector3 position;
     private Vector3 orientation;
-    private int team;
+    private Team team;
     public int fitness = 1000;
     private int numParts;
 
-    private Transform tileInfo;
+    private GameObject tile;
 
-    public OrigamiRobot(int team, int numParts, Transform tileInfo)
+    public OrigamiRobot(Team team, int numParts, GameObject tile)
     {
         this.numParts = numParts;
         this.team = team; //the robot's team or colony.
-        this.tileInfo = tileInfo;
+        this.tile = tile;
 
         parts = new Triangle[numParts]; //initial number of triangles the robot is made up of.
-        position = tileInfo.position; //inital robot's position.
+        position = tile.transform.position; //inital robot's position.
         InitializeParts();
     }
 
@@ -134,12 +135,12 @@ public class OrigamiRobot
         return parts;
     }
 
-    public int GetTeam()
+    public Team GetTeam()
     {
         return team;
     }
 
-    public void SetTeam(int team)
+    public void SetTeam(Team team)
     {
         this.team = team;
     }

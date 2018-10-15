@@ -8,7 +8,7 @@ namespace Assets.Scripts
     public class GameState
     {
         public object GameBoard { get; set; }
-        public List<OrigamiRobot> TeamA { get; set; }
-        public List<OrigamiRobot> Teamb { get; set; }
+        public Team TeamA { get; set; }
+        public Team TeamB { get; set; }
     }
 }
