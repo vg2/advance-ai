@@ -24,9 +24,9 @@ namespace Assets.Scripts
             {
                 // Better init robots to match tiles
                 GameObject tmp = GameObject.FindGameObjectsWithTag("UpTag")[0];
-                OrigamiRobot robot = new OrigamiRobot(this, 3, tmp);
+                // OrigamiRobot robot = new OrigamiRobot(this, 3, tmp);
 
-                _robots.Add(robot);
+                // _robots.Add(robot);
             }
         }
 

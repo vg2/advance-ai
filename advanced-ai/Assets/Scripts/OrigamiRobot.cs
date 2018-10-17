@@ -15,20 +15,20 @@ public class OrigamiRobot
 
     private Vector3 position;
     private Vector3 orientation;
-    private Team team;
+    private int team;
     public int fitness = 1000;
     private int numParts;
 
-    private GameObject tile;
+    private Transform tileInfo;
 
-    public OrigamiRobot(Team team, int numParts, GameObject tile)
+    public OrigamiRobot(int team, int numParts, Transform tileInfo)
     {
         this.numParts = numParts;
         this.team = team; //the robot's team or colony.
-        this.tile = tile;
+        this.tileInfo = tileInfo;
 
         parts = new Triangle[numParts]; //initial number of triangles the robot is made up of.
-        position = tile.transform.position; //inital robot's position.
+        position = tileInfo.position; //inital robot's position.
         InitializeParts();
     }
 
@@ -141,12 +141,12 @@ public class OrigamiRobot
         return parts;
     }
 
-    public Team GetTeam()
+    public int GetTeam()
     {
         return team;
     }
 
-    public void SetTeam(Team team)
+    public void SetTeam(int team)
     {
         this.team = team;
     }
