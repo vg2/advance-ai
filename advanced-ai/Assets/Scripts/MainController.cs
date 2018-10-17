@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class MainController : MonoBehaviour
+    public class MainController
     {
         private readonly Movement _movement;
         private readonly global::Evolution _evolution;
@@ -22,8 +22,14 @@ namespace Assets.Scripts
         {
             _gameSetup = new GameSetup(new DefaultWinCondition());
 
+            //This gives NullReferenceException when run 
             _gameState.TeamA.InitRobots();
             _gameState.TeamB.InitRobots();
+        }
+
+        public void Update()
+        {
+
         }
     }
 }
