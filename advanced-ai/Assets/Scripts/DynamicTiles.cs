@@ -2,27 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DynamicTiles : MonoBehaviour {
+public class DynamicTiles : MonoBehaviour
+{
 
 
+    public int hexagon_scale;
+    public GameObject[] hexagons;
 
-   public GameObject[] hexagons;
-    // Use this for initialization
-    void Start () {
-            hexagons = GameObject.FindGameObjectsWithTag("DownTag");
+    void Start()
+    {
+        hexagons = GameObject.FindGameObjectsWithTag("DownTag");
 
         if (hexagons != null)
         {
-            foreach(GameObject hexagon in hexagons)
+            int len = hexagons.Length;
+            int diff = len - hexagon_scale;
+            for (int i = 0; i < diff; i++)
             {
-                hexagon.SetActive(false);
+                hexagons[i].SetActive(false);
             }
         }
-        
+        hexagons = GameObject.FindGameObjectsWithTag("UpTag");
+
+        if (hexagons != null)
+        {
+            int len = hexagons.Length;
+            int diff = len - hexagon_scale;
+            for (int i = 0; i < diff; i++)
+            {
+                hexagons[i].SetActive(false);
+            }
+        }
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
 }
