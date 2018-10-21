@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using UnityEngine;
 using Random = System.Random;
 
-namespace Assets.Scripts.Evolution
+namespace Assets.Scripts.Evolution.ClonalSelection
 {
     class Mutation
     {
         private const double MutationProbabilityFactor = 10000;
         
-        internal static List<OrigamiRobot> mutate(List<OrigamiRobot> newPopulation)
+        internal static List<OrigamiRobot> Mutate(List<OrigamiRobot> newPopulation)
         {
-            return newPopulation.Select(mutate).ToList();
+            return newPopulation.Select(Mutate).ToList();
         }
 
-        private static OrigamiRobot mutate(OrigamiRobot robot)
+        private static OrigamiRobot Mutate(OrigamiRobot robot)
         {
             var currentBody = robot.getBody();
 
