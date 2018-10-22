@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System;
+using Assets.Scripts;
 
 /*
  * Author: Siphesihle Sithungu, Anthony Kolenic, Martin Messe

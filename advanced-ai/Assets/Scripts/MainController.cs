@@ -4,28 +4,32 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class MainController : MonoBehaviour
+    public class MainController
     {
         private readonly Movement _movement;
         private readonly global::Evolution _evolution;
         private GameSetup _gameSetup;
-        private List<OrigamiRobot> _robots;
+        private GameState _gameState;
 
         public MainController()
         {
             _movement = new Movement();
             _evolution = new global::Evolution();
-            
+            _gameState = new GameState();
         }
 
-        public void StartGame(int robotsPerTeam)
+        public void Start()
         {
-            _gameSetup = new GameSetup(robotsPerTeam, new DefaultWinCondition());
-            _robots = new List<OrigamiRobot>(); // todo: replace with call to Robot Origin to generate robots
+            _gameSetup = new GameSetup(new DefaultWinCondition());
 
-            throw new NotImplementedException();
+            //This gives NullReferenceException when run 
+            _gameState.TeamA.InitRobots();
+            _gameState.TeamB.InitRobots();
         }
 
+        public void Update()
+        {
 
+        }
     }
 }
