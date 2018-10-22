@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Evolution;
 using System.Collections.Generic;
+using Assets.Scripts.Evolution.ClonalSelection;
 
 public class Evolution {
 
@@ -24,7 +25,7 @@ public class Evolution {
         }
 
         // Mutation
-        new_pop = Mutation.mutate(new_pop);
+        new_pop = Mutation.Mutate(new_pop);
 
         return new_pop;
     }

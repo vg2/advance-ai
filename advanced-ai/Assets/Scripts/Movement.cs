@@ -11,6 +11,8 @@ public class Movement : MonoBehaviour {
      * Behavour Parameters : Aggression - biases the bots to attack over run
     */
     private int Aggression;
+    private List<OrigamiRobot> teamA;
+    private List<OrigamiRobot> teamB;
 
     private int RandomNumber(int Min, int Max)
     {
@@ -32,8 +34,8 @@ public class Movement : MonoBehaviour {
          */
 
         //-- Split into Team A and Team B and collect positions of the robots. --//
-        List<OrigamiRobot> teamA = new List<OrigamiRobot>();
-        List<OrigamiRobot> teamB = new List<OrigamiRobot>();
+        teamA = new List<OrigamiRobot>();
+        teamB = new List<OrigamiRobot>();
         TeamAPositions = new List<Vector3>();
         TeamBPositions = new List<Vector3>();
 
@@ -80,6 +82,13 @@ public class Movement : MonoBehaviour {
     }
 
     // ---------------------------------------- LG ----------------------------------------------
+    private struct Detector
+    {
+        float detected;
+        bool friend;
+    }
+
+
     public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots, OrigamiRobot[] OrTeam)
     {
         Vector3[] Postions = new Vector3[OrTeam.Length];
@@ -93,14 +102,40 @@ public class Movement : MonoBehaviour {
         return Postions;
     }
 
-    private OrigamiRobot EvaluateMove()
+    private OrigamiRobot EvaluateMove(char team)
     {
         OrigamiRobot newOR = null;
         // Perform rotation check
 
+        NSA(team);
+
         // perform next movement
         return newOR;
         
+    }
+
+    private void NSA(char team)
+    {
+        // generate detections
+        if (team == 'a')
+        {
+            // generate detectors for team a
+            CreateDetector(teamA);
+        }
+        else 
+        if(team == 'b')
+        {
+            // generate detectors for team b
+            CreateDetector(teamB);
+
+        }
+    }
+
+    private Detector CreateDetector(List<OrigamiRobot> team)
+    {
+        Detector d = new Detector();
+
+        return d;
     }
 
     //----------------------------------------------------------------------------------------- (on hold for now)
