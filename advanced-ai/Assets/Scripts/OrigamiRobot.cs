@@ -15,23 +15,23 @@ public class OrigamiRobot
 
     private Vector3 position;
     private Vector3 orientation;
-    private int team;
+    private Team team;
     public int fitness = 1000;
     private int numParts;
     private Boolean centreFound;
     private Vector3 centre;
 
-    private Transform tileInfo;
+    private GameObject tile;
 
-    public OrigamiRobot(int team, int numParts, Transform tileInfo)
+    public OrigamiRobot(Team team, int numParts, GameObject tile)
     {
         this.numParts = numParts;
         centreFound = false;
         this.team = team; //the robot's team or colony.
-        this.tileInfo = tileInfo;
+        this.tile = tile;
 
         parts = new Triangle[numParts]; //initial number of triangles the robot is made up of.
-        position = tileInfo.position; //inital robot's position.
+        position = tile.transform.position; //inital robot's position.
         InitializeParts();
     }
 
@@ -119,15 +119,20 @@ public class OrigamiRobot
         return new Vector3(0,0,0);
 	}
 
+    public GameObject GetRobotTile()
+    {
+        return this.tile;
+    }
+
     public Transform GetRobotTransformProperties()
     {
-        return this.tileInfo;
+        return this.tile.transform;
     }
 		
     //--Function for generating a triangle with random vertices.--//
     private Triangle RandTriangle()
     {
-        return Triangle.GenerateRandomTriangle(tileInfo, position);
+        return Triangle.GenerateRandomTriangle(tile.transform, position);
     }
 
     //--This function removes Triangles that no longer have vacant sides from candidate links.--//
@@ -177,12 +182,12 @@ public class OrigamiRobot
         return parts;
     }
 
-    public int GetTeam()
+    public Team GetTeam()
     {
         return team;
     }
 
-    public void SetTeam(int team)
+    public void SetTeam(Team team)
     {
         this.team = team;
     }

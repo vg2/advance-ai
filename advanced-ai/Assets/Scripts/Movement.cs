@@ -24,37 +24,37 @@ public class Movement : MonoBehaviour {
     // MoveRobots
     public void MoveRobots(OrigamiRobot[] or)
     {
-        List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
-        List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
+        //List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
+        //List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
 
-        // ---------------------------------------- SS ----------------------------------------------
-        /*
-         *Description: Split into team A and team B
-         * Collect postions of robots per team and perform movement (MovementStratGeneration)
-         */
+        //// ---------------------------------------- SS ----------------------------------------------
+        ///*
+        // *Description: Split into team A and team B
+        // * Collect postions of robots per team and perform movement (MovementStratGeneration)
+        // */
 
-        //-- Split into Team A and Team B and collect positions of the robots. --//
-        teamA = new List<OrigamiRobot>();
-        teamB = new List<OrigamiRobot>();
-        TeamAPositions = new List<Vector3>();
-        TeamBPositions = new List<Vector3>();
+        ////-- Split into Team A and Team B and collect positions of the robots. --//
+        //teamA = new List<OrigamiRobot>();
+        //teamB = new List<OrigamiRobot>();
+        //TeamAPositions = new List<Vector3>();
+        //TeamBPositions = new List<Vector3>();
 
-        for (int i = 0; i < or.Length; i++)
-        {
-            if (or[i].GetTeam() == 0)
-            {
-                //Robot belongs to Team A.
-                teamA.Add(or[i]);
-                TeamAPositions.Add(or[i].GetPosition());
-            }
+        //for (int i = 0; i < or.Length; i++)
+        //{
+        //    if (or[i].GetTeam() == 0)
+        //    {
+        //        //Robot belongs to Team A.
+        //        teamA.Add(or[i]);
+        //        TeamAPositions.Add(or[i].GetPosition());
+        //    }
 
-            else
-            {
-                //Robot belongs to Team B.
-                teamB.Add(or[i]);
-                TeamBPositions.Add(or[i].GetPosition());
-            }  
-        }
+        //    else
+        //    {
+        //        //Robot belongs to Team B.
+        //        teamB.Add(or[i]);
+        //        TeamBPositions.Add(or[i].GetPosition());
+        //    }  
+        //}
 
         //-- TOD: Move robots using decision tree. --//
 

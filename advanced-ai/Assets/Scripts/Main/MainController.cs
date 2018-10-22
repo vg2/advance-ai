@@ -22,7 +22,6 @@ namespace Assets.Scripts
         {
             _gameSetup = new GameSetup(new DefaultWinCondition());
 
-            //This gives NullReferenceException when run 
             _gameState.TeamA.InitRobots();
             _gameState.TeamB.InitRobots();
         }

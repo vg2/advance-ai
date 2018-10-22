@@ -11,5 +11,10 @@ namespace Assets.Scripts
         public object GameBoard { get; set; }
         public Team TeamA { get; set; }
         public Team TeamB { get; set; }
+
+        public GameState() {
+            TeamA = new Team("Autobots");
+            TeamB = new Team("Decepticon");
+        }
     }
 }
