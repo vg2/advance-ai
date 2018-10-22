@@ -18,18 +18,59 @@ public class OrigamiRobot
     private int team;
     public int fitness = 1000;
     private int numParts;
+    private Boolean centreFound;
+    private Vector3 centre;
 
     private Transform tileInfo;
 
     public OrigamiRobot(int team, int numParts, Transform tileInfo)
     {
         this.numParts = numParts;
+        centreFound = false;
         this.team = team; //the robot's team or colony.
         this.tileInfo = tileInfo;
 
         parts = new Triangle[numParts]; //initial number of triangles the robot is made up of.
         position = tileInfo.position; //inital robot's position.
         InitializeParts();
+    }
+
+    /*
+	 * Calculate the centre of a robot based on its position
+	 */
+    public Vector3 GetCentre()
+    {
+        if (!centreFound)
+        {
+            //initiliaze values 
+            int numTriangles = parts.Length;
+            float x = 0;
+            float y = 0;
+            float z = 0;
+            int i = 0;
+
+            //calculate total for all triangles
+            for (i = 0; i < numTriangles;i++)
+            {
+                List<Vector3> triangles = parts[i].GetVertices();
+                Vector3 triA = triangles[0];
+                Vector3 triB = triangles[1];
+                Vector3 triC = triangles[2];
+                x += triA.x + triB.x + triC.x;
+                y += triA.y + triB.y + triC.y;
+                z += triA.z + triB.z + triC.z;
+            }
+
+            //Calculate Average 
+            x = x / numTriangles;
+            y = y / numTriangles;
+            z = z / numTriangles;
+
+            //set centre 
+            centreFound = true;
+            centre = new Vector3(x, y, z);
+        }
+        return centre;
     }
 
     /*
@@ -123,6 +164,7 @@ public class OrigamiRobot
     public void SetBody(Triangle[] bodyProperties)
     {
         this.parts = bodyProperties;
+        centreFound = false;
     }
 
     public void setPosition(Vector3 position)
