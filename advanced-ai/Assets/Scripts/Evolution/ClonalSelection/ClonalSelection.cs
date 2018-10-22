@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts;
 
 namespace Assets.Scripts.Evolution.ClonalSelection
 {
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Evolution.ClonalSelection
 
         public Team Execute(Team antibodyTeam, Team antigenTeam)
         {
-            foreach (var antigen in antigenTeam.Robots)
+            foreach (var antigen in antigenTeam.GetRobots())
             {
                 var eligibleAntibodies = GetRobotsEligibleForCloning(antibodyTeam, antigen);
 
@@ -28,8 +29,8 @@ namespace Assets.Scripts.Evolution.ClonalSelection
                     var bestClone = mutatedClones.OrderByDescending(c => c.fitness).First();
 
                     /* this might break loop */
-                    var indexToReplace = antibodyTeam.Robots.IndexOf(eligibleAntibody);
-                    antibodyTeam.Robots[indexToReplace] = bestClone;
+                    var indexToReplace = antibodyTeam.GetRobots().IndexOf(eligibleAntibody);
+                    antibodyTeam.GetRobots()[indexToReplace] = bestClone;
                 }
             }
 
@@ -40,7 +41,7 @@ namespace Assets.Scripts.Evolution.ClonalSelection
         {
             var eligibleRobots = new List<OrigamiRobot>();
 
-            foreach (var antibody in antibodyTeam.Robots)
+            foreach (var antibody in antibodyTeam.GetRobots())
             {
                 var affinity = DetermineAffinity(antibody, currentAntigen);
 
