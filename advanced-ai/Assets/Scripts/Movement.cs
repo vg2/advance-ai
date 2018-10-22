@@ -56,6 +56,9 @@ public class Movement : MonoBehaviour {
             }  
         }
 
+        //-- Use Decision Tree to move robots --//
+        DecisionTree tree = new DecisionTree(2);
+        
         // ------------------------------------------------------------------------------------------ // End
 
         // ---------------------------------------- FC ----------------------------------------------

@@ -115,6 +115,11 @@ public class DecisionTree
         return depth;
     }
 
+    public void OutputTree()
+    {
+        //TODO: Display the tree to the console.
+    }
+
     public class DTNode
     {
         private DTNode leftChild;
