@@ -25,15 +25,15 @@ namespace Assets.Scripts.Evolution.ClonalSelection
                     var mutatedClones = CloneAndMutate(eligibleAntibody, antigen);
 
                     /* what updates fitness? */
-                    var bestClone = mutatedClones.Max(c => c.fitness);
+                    var bestClone = mutatedClones.OrderByDescending(c => c.fitness).First();
 
                     /* this might break loop */
-                    
+                    var indexToReplace = antibodyTeam.Robots.IndexOf(eligibleAntibody);
+                    antibodyTeam.Robots[indexToReplace] = bestClone;
                 }
             }
 
-            var temp = new List<OrigamiRobot>();
-            return new Team(antibodyTeam.Name, temp);
+            return antibodyTeam;
         }
 
         private List<OrigamiRobot> GetRobotsEligibleForCloning(Team antibodyTeam, OrigamiRobot currentAntigen)
