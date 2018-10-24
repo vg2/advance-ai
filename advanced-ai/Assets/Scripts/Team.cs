@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,13 +20,16 @@ namespace Assets.Scripts
         {
             _robots = new List<OrigamiRobot>();
 
-            for(int i = 0; i < SettingsContainer.numberOfBots; i++)
+            for(int i = 0; i < GameObject.FindGameObjectsWithTag("UpTag").Length; i++)
             {
                 // Better init robots to match tiles
-                GameObject tmp = GameObject.FindGameObjectsWithTag("UpTag")[0];
-                // OrigamiRobot robot = new OrigamiRobot(this, 3, tmp);
 
-                // _robots.Add(robot);
+                GameObject tile = GameObject.FindGameObjectsWithTag("UpTag")[i];
+
+                Debug.Log("Creating robot");
+                OrigamiRobot robot = new OrigamiRobot(this, 3, tile);
+                _robots.Add(robot);
+                Debug.Log("Robot created");
             }
         }
 

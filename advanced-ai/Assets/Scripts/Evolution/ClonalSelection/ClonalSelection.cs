@@ -72,7 +72,7 @@ namespace Assets.Scripts.Evolution.ClonalSelection
 
             for (var i = 0; i < numberOfClones; i++)
             {
-                clones.Add(new OrigamiRobot(antibody.GetTeam(), antibody.GetNumParts(), antibody.GetRobotTransformProperties()));
+                clones.Add(new OrigamiRobot(antibody.GetTeam(), antibody.GetNumParts(), antibody.GetRobotTile()));
             }
 
             return Mutation.Mutate(clones);
