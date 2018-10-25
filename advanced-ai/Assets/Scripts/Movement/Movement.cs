@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +12,6 @@ public class Movement : MonoBehaviour {
      * Behavour Parameters : Aggression - biases the bots to attack over run
     */
     private int Aggression;
-    private List<OrigamiRobot> teamA;
-    private List<OrigamiRobot> teamB;
 
     private int RandomNumber(int Min, int Max)
     {
@@ -22,43 +21,36 @@ public class Movement : MonoBehaviour {
     }
 
     // MoveRobots
-    public void MoveRobots(OrigamiRobot[] or)
+    public void MoveRobots(Team teamA, Team teamB)
     {
-        //List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
-        //List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
+        List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
+        List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
 
-        //// ---------------------------------------- SS ----------------------------------------------
-        ///*
-        // *Description: Split into team A and team B
-        // * Collect postions of robots per team and perform movement (MovementStratGeneration)
-        // */
+        // ---------------------------------------- SS ----------------------------------------------
+        /*
+         *Description: Split into team A and team B
+         * Collect postions of robots per team and perform movement (MovementStratGeneration)
+         */
 
-        ////-- Split into Team A and Team B and collect positions of the robots. --//
-        //teamA = new List<OrigamiRobot>();
-        //teamB = new List<OrigamiRobot>();
-        //TeamAPositions = new List<Vector3>();
-        //TeamBPositions = new List<Vector3>();
+        //-- Split into Team A and Team B and collect positions of the robots. --//
+        TeamAPositions = new List<Vector3>();
+        TeamBPositions = new List<Vector3>();
 
-        //for (int i = 0; i < or.Length; i++)
-        //{
-        //    if (or[i].GetTeam() == 0)
-        //    {
-        //        //Robot belongs to Team A.
-        //        teamA.Add(or[i]);
-        //        TeamAPositions.Add(or[i].GetPosition());
-        //    }
+        foreach (OrigamiRobot r in teamA.GetRobots())
+        {
+                //Robot belongs to Team A.
+                TeamAPositions.Add(r.GetPosition());
+        }
 
-        //    else
-        //    {
-        //        //Robot belongs to Team B.
-        //        teamB.Add(or[i]);
-        //        TeamBPositions.Add(or[i].GetPosition());
-        //    }  
-        //}
+        foreach (OrigamiRobot r in teamB.GetRobots())
+        {
+            //Robot belongs to Team B.
+            TeamBPositions.Add(r.GetPosition());
+        }
 
         //-- Use Decision Tree to move robots --//
         DecisionTree tree = new DecisionTree(2);
-        
+        Debug.Log(tree.ToString());
         // ------------------------------------------------------------------------------------------ // End
 
         // ---------------------------------------- FC ----------------------------------------------
@@ -85,7 +77,7 @@ public class Movement : MonoBehaviour {
     private struct Detector
     {
         float detected;
-        bool friend;
+        bool friend; 
     }
 
 

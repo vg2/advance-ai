@@ -61,5 +61,9 @@ public class TileScript : MonoBehaviour
         //        Debug.Log(t.GetVertexA() + " - " + t.GetVertexB() + " - " + t.GetVertexC());
         //    }
         //}
+
+
+        DecisionTree tree = new DecisionTree(2);
+        Debug.Log(tree.ToString());
     }
 }

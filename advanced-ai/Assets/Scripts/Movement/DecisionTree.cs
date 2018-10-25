@@ -115,9 +115,30 @@ public class DecisionTree
         return depth;
     }
 
-    public void OutputTree()
+    override
+    public string ToString()
     {
-        
+        string output = "------------ROOT-----------\n\n";
+        output += walkTree(root);
+        return output;
+    }
+
+    private string walkTree(DTNode node)
+    {
+        string temp = "";
+        //Base case.
+        if (node.isLeaf())
+        {
+            return node.GetDecision() + "\n";
+        }
+
+        temp += node.GetFunction() + "\n";
+        temp += "-----Left Child-----\n";
+        temp += walkTree(node.GetLeftChild());
+        temp += "-----Right Child-----\n";
+        temp += walkTree(node.GetRightChild());
+
+        return temp;
     }
 
     public class DTNode
@@ -184,6 +205,11 @@ public class DecisionTree
         public DTNode GetParent()
         {
             return parent;
+        }
+
+        public Boolean isLeaf()
+        {
+            return function == State.None;
         }
     }
 }
