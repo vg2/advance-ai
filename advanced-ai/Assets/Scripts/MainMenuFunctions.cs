@@ -11,13 +11,12 @@ public class MainMenuFunctions : MonoBehaviour {
 
     public void Start()
     {
-        Debug.Log("A");
-        numOriBots = GameObject.Find("Canvas/SettingObject/NumBots").GetComponent<Slider>();
-
         numBattles = GameObject.Find("Canvas/SettingObject/NumBattles").GetComponent<Slider>();
+        numOriBots = GameObject.Find("Canvas/SettingObject/NumBots").GetComponent<Slider>();
         numOriBots.onValueChanged.AddListener(delegate { NumBotChanged(); });
         numBattles.onValueChanged.AddListener(delegate { NumBattlesChanged(); });
-        int numBots = (int)GameObject.Find("Canvas/SettingObject/NumBots").GetComponent<Slider>().value;
+        GameObject.Find("Canvas/SettingObject/txtNumBots").GetComponent<Text>().text = "Number of Bots: " + (int)numOriBots.value;
+        GameObject.Find("Canvas/SettingObject/txtNumBattles").GetComponent<Text>().text = "Number of Battles: " + (int)numBattles.value;
     }
 
     public void StartSim()
@@ -35,9 +34,9 @@ public class MainMenuFunctions : MonoBehaviour {
         Toggle trainMode = GameObject.Find("Canvas/SettingObject/TrainMode").GetComponent<Toggle>();
         bool mode = trainMode.isOn;
 
-        int numBots = (int)this.numOriBots.value;
+        int numBots = (int)GameObject.Find("Canvas/SettingObject/NumBots").GetComponent<Slider>().value;
 
-        int numTurns = (int)this.numBattles.value;
+        int numTurns = (int)GameObject.Find("Canvas/SettingObject/NumBattles").GetComponent<Slider>().value;
 
         SettingsContainer.trainingModeEnabled = mode;
         SettingsContainer.numberOfBots = numBots;
@@ -47,11 +46,13 @@ public class MainMenuFunctions : MonoBehaviour {
 
     private void NumBotChanged()
     {
+        GameObject.Find("Canvas/SettingObject/txtNumBots").GetComponent<Text>().text = "Number of Bots: " + (int)numOriBots.value;
         Debug.Log(numOriBots.value.ToString());
     }
 
     private void NumBattlesChanged()
     {
+        GameObject.Find("Canvas/SettingObject/txtNumBattles").GetComponent<Text>().text = "Number of Battles: " + (int)numBattles.value;
         Debug.Log(numBattles.value.ToString());
     }
 }
