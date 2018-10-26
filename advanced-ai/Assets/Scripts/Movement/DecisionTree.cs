@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 /*
  * Author: Siphesihle Sithungu
@@ -17,16 +18,16 @@ public class DecisionTree
 
     public DecisionTree(int depth)
     {
-        root = new DTNode(RandFunction(), Decision.None, null, null);
+        root = new DTNode(RandFunction(), Decision.None);
         this.depth = depth;
         RandomInit(); //Randomly initialise the tree for first use.
     }
 
     //-- Initializes the tree with random values. --//
-    private void RandomInit()
+    public void RandomInit()
     {
         int currentDepth = 0;
-        Grow(root, currentDepth);
+        Grow(root, currentDepth + 1);
     }
 
     //-- This function grows the tree recursively until the desired depth is met. --//
@@ -35,22 +36,21 @@ public class DecisionTree
         //Base case. Time to generate decision nodes.
         if(currentDepth == depth)
         {
-            DTNode ld = new DTNode(State.None, RandDecision(), null, null);
-            DTNode rd = new DTNode(State.None, RandDecision(), null, null);
+            DTNode ld = new DTNode(State.None, RandDecision());
+            DTNode rd = new DTNode(State.None, RandDecision());
             AddLeftChild(ld, parent);
             AddRightChild(rd, parent);
             return;
         }
 
         //Continue generating function nodes.
-        DTNode lf = new DTNode(RandFunction(), Decision.None, null, null);
-        DTNode rf = new DTNode(RandFunction(), Decision.None, null, null);
+        DTNode lf = new DTNode(RandFunction(), Decision.None);
+        DTNode rf = new DTNode(RandFunction(), Decision.None);
         AddLeftChild(lf, parent);
         AddRightChild(rf, parent);
-
         //Keep growing the tree.
-        Grow(lf, ++currentDepth);
-        Grow(rf, ++currentDepth);
+        Grow(lf, currentDepth + 1);
+        Grow(rf, currentDepth + 1);
     }
 
     private void AddRightChild(DTNode rd, DTNode parent)
@@ -68,7 +68,7 @@ public class DecisionTree
     //-- Generates and returns a random Decision --//
     private Decision RandDecision()
     {
-        int r = UnityEngine.Random.Range(1, 6);
+        int r = UnityEngine.Random.Range(1, 7);
         switch (r)
         {
             case 1:
@@ -91,7 +91,7 @@ public class DecisionTree
     //-- Generates and returns a random State. --//
     private State RandFunction()
     {
-        int r = UnityEngine.Random.Range(1, 3);
+        int r = UnityEngine.Random.Range(1, 4);
         switch (r)
         {
             case 1:
@@ -119,24 +119,24 @@ public class DecisionTree
     public string ToString()
     {
         string output = "------------ROOT-----------\n\n";
-        output += walkTree(root);
+        output += WalkTree(root);
         return output;
     }
 
-    private string walkTree(DTNode node)
+    private string WalkTree(DTNode node)
     {
         string temp = "";
         //Base case.
-        if (node.isLeaf())
+        if (node.IsLeaf())
         {
             return node.GetDecision() + "\n";
         }
 
-        temp += node.GetFunction() + "\n";
+        temp += node.GetState() + "\n";
         temp += "-----Left Child-----\n";
-        temp += walkTree(node.GetLeftChild());
+        temp += WalkTree(node.GetLeftChild());
         temp += "-----Right Child-----\n";
-        temp += walkTree(node.GetRightChild());
+        temp += WalkTree(node.GetRightChild());
 
         return temp;
     }
@@ -147,14 +147,13 @@ public class DecisionTree
         private DTNode rightChild;
         private DTNode parent;
 
-        private State function;
+        private State state;
         private Decision decision;
 
-        public DTNode(State function, Decision decision, DTNode leftChild, DTNode rightChild)
+        public DTNode(State state, Decision decision)
         {
-            this.function = function;
+            this.state = state;
             this.decision = decision;
-            this.leftChild = leftChild;
         }
 
         public DTNode GetLeftChild()
@@ -177,14 +176,14 @@ public class DecisionTree
             this.rightChild = rightChild;
         }
 
-        public State GetFunction()
+        public State GetState()
         {
-            return function;
+            return state;
         }
 
-        public void SetFunction(State function)
+        public void SetState(State state)
         {
-            this.function = function;
+            this.state = state;
         }
 
         public Decision GetDecision()
@@ -207,9 +206,9 @@ public class DecisionTree
             return parent;
         }
 
-        public Boolean isLeaf()
+        public Boolean IsLeaf()
         {
-            return function == State.None;
+            return state == State.None;
         }
     }
 }

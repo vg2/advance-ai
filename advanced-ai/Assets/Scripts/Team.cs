@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,6 +36,11 @@ namespace Assets.Scripts
         public List<OrigamiRobot> GetRobots()
         {
             return _robots;
+        }
+        
+        public string GetID()
+        {
+            return _teamID;
         }
     }
 }
