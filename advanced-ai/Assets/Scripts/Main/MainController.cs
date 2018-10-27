@@ -13,7 +13,7 @@ namespace Assets.Scripts
 
         public MainController()
         {
-            _movement = new Movement();
+            _movement = new Movement(1);
             _evolution = new global::Evolution();
             _gameState = new GameState();
         }

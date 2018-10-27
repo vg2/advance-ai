@@ -29,7 +29,7 @@ namespace AssemblyCSharp.Assets.Scripts.Collision
             Tree.DTNode currentNode = actionStrat.GetRoot();
             while (currentNode.GetDecision() == Tree.Decision.None)
             {
-                if (IsStateOfRobot(currentNode.GetState(), r))
+                /*if (IsStateOfRobot(currentNode.GetState(), r))
                 {
                     //The answer is yes, move to left child.
                     currentNode = currentNode.GetLeftChild();
@@ -38,11 +38,11 @@ namespace AssemblyCSharp.Assets.Scripts.Collision
                 {
                     //The answer is no, move to right child.
                     currentNode = currentNode.GetRightChild();
-                }
+                }*/
             }
 
             //We have finally reached a decision node.
-            ExecuteMove(r);
+           // ExecuteMove(r);
         }
 
         private bool IsStateOfRobot(Tree.State state, Tree r)
