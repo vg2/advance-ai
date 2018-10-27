@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class DynamicTiles : MonoBehaviour
 {
-
+    //@Author Martin Rendani Mese
+    //Render dynamic tiles of the simulation
 
     public int hexagon_scale;
     public GameObject[] hexagons;
@@ -19,7 +20,7 @@ public class DynamicTiles : MonoBehaviour
             int diff = len - hexagon_scale;
             for (int i = 0; i < diff; i++)
             {
-                hexagons[i].SetActive(false);
+//hexagons[i].SetActive(false);
             }
         }
         hexagons = GameObject.FindGameObjectsWithTag("UpTag");
@@ -30,7 +31,7 @@ public class DynamicTiles : MonoBehaviour
             int diff = len - hexagon_scale;
             for (int i = 0; i < diff; i++)
             {
-                hexagons[i].SetActive(false);
+//hexagons[i].SetActive(false);
             }
         }
 

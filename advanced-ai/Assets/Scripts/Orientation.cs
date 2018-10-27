@@ -2,30 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This class defines basic movements of origami robots
+//Author: Martin Mese
+
+
 public class Orientation : MonoBehaviour {
 
-    //Make sure you attach a Rigidbody in the Inspector of this GameObject
-    Rigidbody m_Rigidbody;
-    Vector3 m_EulerAngleVelocity;
-
-    void Start()
-    {
-        m_EulerAngleVelocity = new Vector3(0, 100, 0);
-        m_Rigidbody = GetComponent<Rigidbody>();
-    }
-
-    void FixedUpdate()
-    {
-        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.deltaTime);
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
-    }
-
-    void fold()
-    {
-
-    }
-
-
-
-
+     private bool dirRight = true;
+     public float speed = 2.0f;
+ 
+     void Update () {
+         if (dirRight)
+             transform.Translate (Vector2.right * speed * Time.deltaTime);
+         else
+             transform.Translate (-Vector2.right * speed * Time.deltaTime);
+         
+         if(transform.position.x >= 4.0f) {
+             dirRight = false;
+         }
+         
+         if(transform.position.x <= -4) {
+             dirRight = true;
+         }
+	 }
 }
