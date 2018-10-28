@@ -22,8 +22,6 @@ namespace Assets.Scripts
 
             for(int i = 0; i < GameObject.FindGameObjectsWithTag("UpTag").Length; i++)
             {
-                // Better init robots to match tiles
-
                 GameObject tile = GameObject.FindGameObjectsWithTag("UpTag")[i];
 
                 Debug.Log("Creating robot");
@@ -37,10 +35,42 @@ namespace Assets.Scripts
         {
             return _robots;
         }
-        
+
+        public List<OrigamiRobot> ActiveRobots()
+        {
+            List<OrigamiRobot> robots = new List<OrigamiRobot>();
+
+            // Add if has health
+
+            return robots;
+        }
+
+        public List<OrigamiRobot> DeactiveRobots()
+        {
+            List<OrigamiRobot> robots = new List<OrigamiRobot>();
+
+            // Add if has no health
+
+            return robots;
+        }
+
+        public void DeactivateDeadRobots()
+        {
+            for(int i = 0; i < _robots.Count; i++)
+            {
+                // Check robot health
+                    // If 0 deactivate
+            }
+        }
+
         public string GetID()
         {
             return _teamID;
+        }
+
+        public int GetTeamFitness()
+        {
+            return _teamFitness;
         }
     }
 }

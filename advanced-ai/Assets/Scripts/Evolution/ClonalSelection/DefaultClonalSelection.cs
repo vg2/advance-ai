@@ -6,11 +6,11 @@ using Assets.Scripts;
 
 namespace Assets.Scripts.Evolution.ClonalSelection
 {
-    public class ClonalSelection
+    public class DefaultClonalSelection : IClonalSelection
     {
         private readonly ClonalSelectionConfiguration _config;
 
-        public ClonalSelection(ClonalSelectionConfiguration config)
+        public DefaultClonalSelection(ClonalSelectionConfiguration config)
         {
             _config = config;
         }
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Evolution.ClonalSelection
             {
                 var affinity = DetermineAffinity(antibody, currentAntigen);
 
-                if (affinity > _config.AffinityThreshold)
+                if (affinity <= _config.AffinityThreshold)
                 {
                     eligibleRobots.Add(antibody);
                 }
@@ -61,8 +61,42 @@ namespace Assets.Scripts.Evolution.ClonalSelection
 
         private int DetermineAffinity(OrigamiRobot antibody, OrigamiRobot antigen)
         {
-            /* Determine Affinty */
-            return 10;
+            var min = int.MaxValue;
+
+            foreach (var triangle in antibody.getBody())
+            {
+                foreach (var antigenTriangle in antigen.getBody())
+                {
+                    var vertexADiff = Math.Abs(
+                                        (triangle.GetVertexA().x - antigenTriangle.GetVertexA().x) 
+                                        + (triangle.GetVertexA().y - antigenTriangle.GetVertexA().y) 
+                                        + (triangle.GetVertexA().z - antigenTriangle.GetVertexA().z)
+                                    );
+
+                    var vertexBDiff = Math.Abs(
+                        (triangle.GetVertexB().x - antigenTriangle.GetVertexB().x)
+                        + (triangle.GetVertexB().y - antigenTriangle.GetVertexB().y)
+                        + (triangle.GetVertexB().z - antigenTriangle.GetVertexB().z)
+                    );
+
+                    var vertexCDiff = Math.Abs(
+                        (triangle.GetVertexC().x - antigenTriangle.GetVertexC().x)
+                        + (triangle.GetVertexC().y - antigenTriangle.GetVertexC().y)
+                        + (triangle.GetVertexC().z - antigenTriangle.GetVertexC().z)
+                    );
+
+                    var diffs = new [] {vertexADiff, vertexBDiff, vertexCDiff};
+
+                    var minDiff = diffs.Min();
+
+                    if (minDiff < min)
+                    {
+                        min = (int)Math.Floor(minDiff);
+                    }
+                }
+            }
+
+            return min;
         }
 
         private List<OrigamiRobot> CloneAndMutate(OrigamiRobot antibody, OrigamiRobot currentAntigen)
