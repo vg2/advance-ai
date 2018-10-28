@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts;
 using Assets.Scripts.Evolution.ClonalSelection;
+using Assets.Scripts.Evolution.StringMatching;
 
 public class Evolution
 {
@@ -9,12 +10,12 @@ public class Evolution
 
     public Evolution()
     {
-        _clonalSelection = ClonalSelectionAlgorithms.DefaultClonalSelection(new ClonalSelectionConfiguration(
+        _clonalSelection = ClonalSelectionAlgorithms.StringMatchingClonalSelection(new ClonalSelectionConfiguration(
             affinityThreshold:1,
             selectionLimit:10,
             defaultCloneSize:100,
             mutationProbabilityFactor:10
-        ));
+        ), new HammingDistanceRule());
     }
 
     public Team Evolve(Team losingTeamToEvolve, Team otherTeam)
