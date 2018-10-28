@@ -12,16 +12,31 @@ namespace Assets.Scripts
 
     public class WinningTeam
     {
-        private readonly string _teamName;
+        private Team _team = null;
 
-        public WinningTeam(string teamName)
+        public Team getTeam()
         {
-            _teamName = teamName;
+            return _team;
         }
 
-        public string TeamName
+        public void setTeam(Team team)
         {
-            get { return _teamName; }
+            _team = team;
+        }
+    }
+
+    public class LosingTeam
+    {
+        private Team _team = null;
+
+        public Team getTeam()
+        {
+            return _team;
+        }
+
+        public void setTeam(Team team)
+        {
+            _team = team;
         }
     }
 
