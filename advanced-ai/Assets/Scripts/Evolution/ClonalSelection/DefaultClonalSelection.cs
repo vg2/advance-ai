@@ -6,11 +6,11 @@ using Assets.Scripts;
 
 namespace Assets.Scripts.Evolution.ClonalSelection
 {
-    public class ClonalSelection : IClonalSelection
+    public class DefaultClonalSelection : IClonalSelection
     {
         private readonly ClonalSelectionConfiguration _config;
 
-        public ClonalSelection(ClonalSelectionConfiguration config)
+        public DefaultClonalSelection(ClonalSelectionConfiguration config)
         {
             _config = config;
         }

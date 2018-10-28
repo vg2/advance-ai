@@ -5,11 +5,11 @@ using Assets.Scripts.Evolution.ClonalSelection;
 
 public class Evolution
 {
-    private ClonalSelection _clonalSelection;
+    private IClonalSelection _clonalSelection;
 
     public Evolution()
     {
-        _clonalSelection = new ClonalSelection(new ClonalSelectionConfiguration(
+        _clonalSelection = ClonalSelectionAlgorithms.DefaultClonalSelection(new ClonalSelectionConfiguration(
             affinityThreshold:1,
             selectionLimit:10,
             defaultCloneSize:100,
