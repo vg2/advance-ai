@@ -3,7 +3,7 @@ using UnityEngine;
 
 /*
  * Author: Siphesihle Sithungu
- * Descritption: Decision that represents an algorithm that the robots will follow.
+ * Descritption: Decision tree that represents the algorithm that the robots will follow.
  */
 public class DecisionTree 
 {

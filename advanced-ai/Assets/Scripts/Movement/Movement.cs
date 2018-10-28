@@ -13,6 +13,7 @@ public class Movement {
     private int Aggression;
     DecisionTree movementStrategy; //Sequence of steps that the robot follows to make a movement decision.
     List<OrigamiRobot> robots;
+
     public Movement(int treeDepth)
     {
         //Instantiate the three with the desired depth.
