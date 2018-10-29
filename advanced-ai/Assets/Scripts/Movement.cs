@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour {
     private List<OrigamiRobot> teamB;
     private static int stimmilation = 2;
     private System.Random rnd;
+    private List<Detector> detectorList;
 
     private int RandmNumber(int value)
     {
@@ -140,15 +141,18 @@ public class Movement : MonoBehaviour {
             // populate it by iterating orgami robots
             for (int i = 0; i < origamiRobots.Length; i++)
             {
-                if (origamiRobots[i].GetTeam() == 1 )
+                if (origamiRobots[i].GetTeam() != currentRobot.GetTeam())
                 {
 
-                    if (checkDistance(origamiRobots, currentRobot) > stimmilation)
+                    if (!(checkDistance(origamiRobots, currentRobot) > stimmilation))
                     {
                         antibody[i] = 1;
                         teamA.Add(origamiRobots[i]);
                     }
-                    
+                    else
+                    {
+                        antibody[i] = 0;
+                    }
                 }
                 else
                 {
@@ -167,7 +171,18 @@ public class Movement : MonoBehaviour {
     {
         // sends an ine for the number of searched values
         int decsion = 0;
+        int currentTeam = currentRobot.GetTeam();
+        for (int i = 0; i < origamiRobots.Length; i++)
+        {
+           if ((Math.Abs(origamiRobots[i].GetPosition().x - currentRobot.GetPosition().x) <= 5) && 
+                (Math.Abs(origamiRobots[i].GetPosition().z - currentRobot.GetPosition().z) <= 5) && 
+                (Math.Abs(origamiRobots[i].GetPosition().y - currentRobot.GetPosition().y) <= 5) &&
+                (origamiRobots[i].GetTeam() != currentRobot.GetTeam()))
+            {
+                decsion++;
+            }
 
+        }
         return decsion;
     }
 
@@ -191,13 +206,14 @@ public class Movement : MonoBehaviour {
             if (antibody[i] == 1)
             {
                 // generate detectors for team a
-                CreateDetector(teamA);
+                detectorList.Add(CreateDetector(teamA));
+
             }
             else
             if (antibody[i] == 0)
             {
                 // generate detectors for team b
-                CreateDetector(teamB);
+                detectorList.Add(CreateDetector(teamB));
 
             }
         }
@@ -217,6 +233,7 @@ public class Movement : MonoBehaviour {
         rnd = new System.Random();
         teamA = new List<OrigamiRobot>();
         teamB = new List<OrigamiRobot>();
+        detectorList = new List<Detector>();
     }
 	
 	// Update is called once per frame
