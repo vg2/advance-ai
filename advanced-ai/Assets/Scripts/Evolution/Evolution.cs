@@ -1,32 +1,25 @@
 ﻿using Assets.Scripts.Evolution;
 using System.Collections.Generic;
+using Assets.Scripts;
 using Assets.Scripts.Evolution.ClonalSelection;
+using Assets.Scripts.Evolution.StringMatching;
 
-public class Evolution {
+public class Evolution
+{
+    private IClonalSelection _clonalSelection;
 
-    public List<OrigamiRobot> evolve(List<OrigamiRobot> old_pop)
+    public Evolution()
     {
-        List<OrigamiRobot> new_pop = new List<OrigamiRobot>();
+        _clonalSelection = ClonalSelectionAlgorithms.StringMatchingClonalSelection(new ClonalSelectionConfiguration(
+            affinityThreshold:1,
+            selectionLimit:10,
+            defaultCloneSize:100,
+            mutationProbabilityFactor:10
+        ), new HammingDistanceRule());
+    }
 
-        // Selection
-        while (new_pop.Count != old_pop.Count)
-        {
-            OrigamiRobot parent1 = Selection.tournament(old_pop);
-            OrigamiRobot parent2 = Selection.tournament(old_pop);
-            while (parent1 == parent2)
-            {
-                 parent2 = Selection.tournament(old_pop);
-            }
-
-            // Breeding / Cloning
-            OrigamiRobot child = Breeding.crossover(parent1, parent2);
-
-            new_pop.Add(child);
-        }
-
-        // Mutation
-        new_pop = Mutation.Mutate(new_pop);
-
-        return new_pop;
+    public Team Evolve(Team losingTeamToEvolve, Team otherTeam)
+    {
+        return _clonalSelection.Execute(losingTeamToEvolve, otherTeam);
     }
 }

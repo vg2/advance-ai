@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -28,38 +29,42 @@ public class TileScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        robots = new List<OrigamiRobot>();
+        //robots = new List<OrigamiRobot>();
 
-        upSide = GameObject.FindGameObjectsWithTag("UpTag");
-        downSide = GameObject.FindGameObjectsWithTag("DownTag");
+        //upSide = GameObject.FindGameObjectsWithTag("UpTag");
+        //downSide = GameObject.FindGameObjectsWithTag("DownTag");
 
-        Debug.Log("Creating upSide robots...");
-        for (int i = 0; i < upSide.Length; i++)
-        {
-            OrigamiRobot robot = new OrigamiRobot(0, 10, upSide[i].transform);
-            robots.Add(robot);
-        }
+        //Debug.Log("Creating upSide robots...");
+        //for (int i = 0; i < upSide.Length; i++)
+        //{
+        //    OrigamiRobot robot = new OrigamiRobot(0, 10, upSide[i].transform);
+        //    robots.Add(robot);
+        //}
 
-        Debug.Log("Creating downSide robots...");
-        for (int i = 0; i < downSide.Length; i++)
-        {
-            OrigamiRobot robot = new OrigamiRobot(0, 10, downSide[i].transform);
-            robots.Add(robot);
-        }
+        //Debug.Log("Creating downSide robots...");
+        //for (int i = 0; i < downSide.Length; i++)
+        //{
+        //    OrigamiRobot robot = new OrigamiRobot(0, 10, downSide[i].transform);
+        //    robots.Add(robot);
+        //}
 
-        Debug.Log("Total number of robots: " + robots.Count);
+        //Debug.Log("Total number of robots: " + robots.Count);
 
-        Dictionary<Triangle, List<Triangle>> links = robots[0].GetLinks();
-        foreach(KeyValuePair<Triangle, List<Triangle>> kv in links)
-        {
-            Debug.Log("---------------------------------------Triangle--------------------------------------------");
-            Debug.Log(kv.Key.GetVertexA() + " - " + kv.Key.GetVertexB() + " - " + kv.Key.GetVertexC());
+        //Dictionary<Triangle, List<Triangle>> links = robots[0].GetLinks();
+        //foreach(KeyValuePair<Triangle, List<Triangle>> kv in links)
+        //{
+        //    Debug.Log("---------------------------------------Triangle--------------------------------------------");
+        //    Debug.Log(kv.Key.GetVertexA() + " - " + kv.Key.GetVertexB() + " - " + kv.Key.GetVertexC());
 
-            Debug.Log("---------------------------------------Neighbours--------------------------------------------");
-            foreach (Triangle t in kv.Value)
-            {
-                Debug.Log(t.GetVertexA() + " - " + t.GetVertexB() + " - " + t.GetVertexC());
-            }
-        }
+        //    Debug.Log("---------------------------------------Neighbours--------------------------------------------");
+        //    foreach (Triangle t in kv.Value)
+        //    {
+        //        Debug.Log(t.GetVertexA() + " - " + t.GetVertexB() + " - " + t.GetVertexC());
+        //    }
+        //}
+
+
+        DecisionTree tree = new DecisionTree(2);
+        Debug.Log(tree.ToString());
     }
 }

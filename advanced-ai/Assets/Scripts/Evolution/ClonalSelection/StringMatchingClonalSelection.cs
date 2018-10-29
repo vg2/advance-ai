@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Assets.Scripts;
+using Assets.Scripts.Evolution.StringMatching;
 
 namespace Assets.Scripts.Evolution.ClonalSelection
 {
-    public class ClonalSelection
+    public class StringMatchingClonalSelection : IClonalSelection
     {
         private readonly ClonalSelectionConfiguration _config;
+        private readonly IStringMatchingRule _stringMatchingRule;
+        private readonly IPresenter<OrigamiRobot, string> _robotStringPresenter;
 
-        public ClonalSelection(ClonalSelectionConfiguration config)
+        public StringMatchingClonalSelection(ClonalSelectionConfiguration config,
+            IStringMatchingRule stringMatchingRule,
+            IPresenter<OrigamiRobot, string> robotStringPresenter)
         {
             _config = config;
+            _stringMatchingRule = stringMatchingRule;
+            _robotStringPresenter = robotStringPresenter;
         }
 
         public Team Execute(Team antibodyTeam, Team antigenTeam)
@@ -45,7 +51,7 @@ namespace Assets.Scripts.Evolution.ClonalSelection
             {
                 var affinity = DetermineAffinity(antibody, currentAntigen);
 
-                if (affinity > _config.AffinityThreshold)
+                if (affinity <= _config.AffinityThreshold)
                 {
                     eligibleRobots.Add(antibody);
                 }
@@ -61,8 +67,12 @@ namespace Assets.Scripts.Evolution.ClonalSelection
 
         private int DetermineAffinity(OrigamiRobot antibody, OrigamiRobot antigen)
         {
-            /* Determine Affinty */
-            return 10;
+            var antibodyString = _robotStringPresenter.Present(antibody);
+            var antigenString = _robotStringPresenter.Present(antigen);
+
+            var affinity = _stringMatchingRule.MatchResult(antibodyString, antigenString);
+
+            return affinity;
         }
 
         private List<OrigamiRobot> CloneAndMutate(OrigamiRobot antibody, OrigamiRobot currentAntigen)
@@ -72,7 +82,7 @@ namespace Assets.Scripts.Evolution.ClonalSelection
 
             for (var i = 0; i < numberOfClones; i++)
             {
-                clones.Add(new OrigamiRobot(antibody.GetTeam(), antibody.GetNumParts(), antibody.GetRobotTransformProperties()));
+                clones.Add(new OrigamiRobot(antibody.GetTeam(), antibody.GetNumParts(), antibody.GetRobotTile()));
             }
 
             return Mutation.Mutate(clones);

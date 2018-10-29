@@ -1,9 +1,9 @@
+using Assets.Scripts;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour {
+public class Movement {
 
     /*
      * Author: Lance Govender (LG), Sihle Sithungu (SS), Fortune Chidzikwe (FC)
@@ -11,15 +11,13 @@ public class Movement : MonoBehaviour {
      * Behavour Parameters : Aggression - biases the bots to attack over run
     */
     private int Aggression;
-    private List<OrigamiRobot> teamA;
-    private List<OrigamiRobot> teamB;
-    private static int stimmilation = 2;
-    private System.Random rnd;
-    private List<Detector> detectorList;
+    DecisionTree movementStrategy; //Sequence of steps that the robot follows to make a movement decision.
+    List<OrigamiRobot> robots;
 
-    private int RandmNumber(int value)
+    public Movement(int treeDepth)
     {
-        return rnd.Next (value);
+        //Instantiate the three with the desired depth.
+        movementStrategy = new DecisionTree(treeDepth);
     }
 
     private int RandomNumber(int Min, int Max)
@@ -29,8 +27,8 @@ public class Movement : MonoBehaviour {
         return value;
     }
 
-    //MoveRobots
-    public void MoveRobots(OrigamiRobot[] or)
+    // MoveRobots
+    public void MoveRobots(Team teamA, Team teamB)
     {
         List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
         List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
@@ -42,82 +40,144 @@ public class Movement : MonoBehaviour {
          */
 
         //-- Split into Team A and Team B and collect positions of the robots. --//
-        teamA = new List<OrigamiRobot>();
-        teamB = new List<OrigamiRobot>();
         TeamAPositions = new List<Vector3>();
         TeamBPositions = new List<Vector3>();
 
-        for (int i = 0; i < or.Length; i++)
+        foreach (OrigamiRobot r in teamA.GetRobots())
         {
-            if (or[i].GetTeam() == 0)
-            {
                 //Robot belongs to Team A.
-                teamA.Add(or[i]);
-                TeamAPositions.Add(or[i].GetPosition());
-            }
+                TeamAPositions.Add(r.GetPosition());
+        }
 
+        foreach (OrigamiRobot r in teamB.GetRobots())
+        {
+            //Robot belongs to Team B.
+            TeamBPositions.Add(r.GetPosition());
+        }
+
+        //-- Use Decision Tree to move robots --//
+        robots = new List<OrigamiRobot>();
+        robots.AddRange(teamA.GetRobots());
+        robots.AddRange(teamB.GetRobots());
+
+        foreach(OrigamiRobot r in teamA.GetRobots())
+        {
+            DetermineMove(r);
+        }
+
+        foreach (OrigamiRobot r in teamB.GetRobots())
+        {
+            DetermineMove(r);
+        }
+        // ------------------------------------------------------------------------------------------ // End
+
+        // ---------------------------------------- FC ----------------------------------------------
+        // update all postions
+        // Perform collision where robots are moving into the same postion
+        // ------------------------------------------------------------------------------------------ // End
+
+        //check collision distance between bots
+
+        //for(Vector3 botAPosition : TeamAPostions)
+        //{
+        //    for(Vector3 botBPosition : TeamBPostions)
+        //    {
+        //        distance = Vector3.Distance(botAPosition, botBPosition);
+        //        if(distance <= minCollisionDistance){
+        //            Collision.Collide(botAPosition, botBPosition);
+        //        }
+        //    }
+        //}
+
+    }
+
+    private void DetermineMove(OrigamiRobot r)
+    {
+        DecisionTree.DTNode currentNode = movementStrategy.GetRoot();
+        while(currentNode.GetDecision() == DecisionTree.Decision.None)
+        {
+            if (IsStateOfRobot(currentNode.GetState(), r))
+            {
+                //The answer is yes, move to left child.
+                currentNode = currentNode.GetLeftChild();
+            }
             else
             {
-                //Robot belongs to Team B.
-                teamB.Add(or[i]);
-                TeamBPositions.Add(or[i].GetPosition());
+                //The answer is no, move to right child.
+                currentNode = currentNode.GetRightChild();
             }
         }
 
-        //-- TOD: Move robots using decision tree. --//
-
-
-        // ------------------------------------------------------------------------------------------ // End
-
-        //    // ---------------------------------------- FC ----------------------------------------------
-        //    // update all postions
-        //    if (AntigenStimmulation())
-        //    {
-        //        PerformCollison();
-        //    }
-
-        //    // Perform collision where robots are moving into the same postion
-        //    // ------------------------------------------------------------------------------------------ // End
-
-        //    //check collision distance between bots
-
-        //    //for(Vector3 botAPosition : TeamAPostions)
-        //    //{
-        //    //    for(Vector3 botBPosition : TeamBPostions)
-        //    //    {
-        //    //        distance = Vector3.Distance(botAPosition, botBPosition);
-        //    //        if(distance <= minCollisionDistance){
-        //    //            Collision.Collide(botAPosition, botBPosition);
-        //    //        }
-        //    //    }
-        //    //}
-
-        //}
-
-        private bool AntigenStimmulation()
-    {
-        return true;
+        //We have finally reached a decision node.
+        ExecuteMove(r);
     }
 
-    private void PerformCollison()
+    private bool IsStateOfRobot(DecisionTree.State state, OrigamiRobot r)
     {
-        //----------------------------------------------------------------------------------------- (on hold for now)
-        // create and initalise Collision Class
-        //TBD
+        if(state == DecisionTree.State.InCollision)
+        {
+            foreach (OrigamiRobot rc in robots)
+            {
+                if(!rc.Equals(r) && rc.GetRobotTile().Equals(r.GetRobotTile()))
+                {
+                    //The two robots are in the same tile.
+                    return true;
+                }
+            }
+        }
 
-        //----------------------------------------------------------------------------------------- // End
+        if (state == DecisionTree.State.InForeignColony)
+        {
+            if (r.GetTeam().GetID() == "1")
+            {
+                //Robot's colony is UpTag.
+                return r.GetRobotTile().CompareTag("DownTag");
+            }
+
+            if (r.GetTeam().GetID() == "2")
+            {
+                //Robot's colony is DownTag.
+                return r.GetRobotTile().CompareTag("UpTag");
+            }
+        }
+
+        if (state == DecisionTree.State.InOwnColony)
+        {
+            if (r.GetTeam().GetID() == "1")
+            {
+                //Robot's colony is UpTag.
+                return r.GetRobotTile().CompareTag("UpTag");
+            }
+
+            if (r.GetTeam().GetID() == "2")
+            {
+                //Robot's colony is DownTag.
+                return r.GetRobotTile().CompareTag("DownTag");
+            }
+        }
+
+        throw new Exception("Robot is in an invalid state");
+    }
+
+    /*
+     * Part of the "update positions" sections for FC
+     */
+    private void ExecuteMove(OrigamiRobot r)
+    {
+        
     }
 
     // ---------------------------------------- LG ----------------------------------------------
     private struct Detector
     {
-        Vector3[] detected;
-        bool friend;
+        float detected;
+        bool friend; 
     }
 
-    public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots)
+
+    public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots, OrigamiRobot[] OrTeam)
     {
-        Vector3[] Postions = new Vector3[AllRobots.Length];
+        Vector3[] Postions = new Vector3[OrTeam.Length];
         //Perform look around for each Oragami robot and insert new postion into Postions
         // Performing a Team check
 
@@ -128,113 +188,53 @@ public class Movement : MonoBehaviour {
         return Postions;
     }
 
-    private int[] antibodyEncoding(OrigamiRobot[] origamiRobots, OrigamiRobot currentRobot)
-    {
-        int[] antibody;
-        if (origamiRobots.Length < 1)
-        {
-            antibody = null;
-        }
-        else
-        {
-            antibody = new int[origamiRobots.Length];
-            // populate it by iterating orgami robots
-            for (int i = 0; i < origamiRobots.Length; i++)
-            {
-                if (origamiRobots[i].GetTeam() != currentRobot.GetTeam())
-                {
-
-                    if (!(checkDistance(origamiRobots, currentRobot) > stimmilation))
-                    {
-                        antibody[i] = 1;
-                        teamA.Add(origamiRobots[i]);
-                    }
-                    else
-                    {
-                        antibody[i] = 0;
-                    }
-                }
-                else
-                {
-                    antibody[i] = 0;
-                    teamB.Add(origamiRobots[i]);
-                }
-               
-            }
-        }
-        
-        // iterate the whole string and find what is important for the 
-        return antibody;
-    }
-
-    private int checkDistance(OrigamiRobot[] origamiRobots, OrigamiRobot currentRobot)
-    {
-        // sends an ine for the number of searched values
-        int decsion = 0;
-        int currentTeam = currentRobot.GetTeam();
-        for (int i = 0; i < origamiRobots.Length; i++)
-        {
-           if ((Math.Abs(origamiRobots[i].GetPosition().x - currentRobot.GetPosition().x) <= 5) && 
-                (Math.Abs(origamiRobots[i].GetPosition().z - currentRobot.GetPosition().z) <= 5) && 
-                (Math.Abs(origamiRobots[i].GetPosition().y - currentRobot.GetPosition().y) <= 5) &&
-                (origamiRobots[i].GetTeam() != currentRobot.GetTeam()))
-            {
-                decsion++;
-            }
-
-        }
-        return decsion;
-    }
-
-    private OrigamiRobot EvaluateMove(int[] antibody)
+    private OrigamiRobot EvaluateMove(char team)
     {
         OrigamiRobot newOR = null;
         // Perform rotation check
 
-        NSA(antibody);
+        NSA(team);
 
         // perform next movement
         return newOR;
         
     }
 
-    private void NSA(int[] antibody)
+    private void NSA(char team)
     {
         // generate detections
-        for (int i = 0; i < antibody.Length; i++)
+        if (team == 'a')
         {
-            if (antibody[i] == 1)
-            {
-                // generate detectors for team a
-                detectorList.Add(CreateDetector(teamA[i]));
-
-            }
-            else
-            if (antibody[i] == 0)
-            {
-                // generate detectors for team b
-                detectorList.Add(CreateDetector(teamB[i]));
-
-            }
+            // generate detectors for team a
+           // CreateDetector(teamA);
         }
-        
+        else 
+        if(team == 'b')
+        {
+            // generate detectors for team b
+          //  CreateDetector(teamB);
+
+        }
     }
 
-    private Detector CreateDetector(OrigamiRobot robotDetected)
+    private Detector CreateDetector(List<OrigamiRobot> team)
     {
         Detector d = new Detector();
-        d.
+
         return d;
     }
+
+    //----------------------------------------------------------------------------------------- (on hold for now)
+    // create and initalise Collision Class
+    //TBD
+
+    //----------------------------------------------------------------------------------------- // End
 
 
     // Use this for initialization
     void Start () {
-        rnd = new System.Random();
-        teamA = new List<OrigamiRobot>();
-        teamB = new List<OrigamiRobot>();
-        detectorList = new List<Detector>();
-    }
+		
+	}
 	
 	// Update is called once per frame
 	void Update () {
