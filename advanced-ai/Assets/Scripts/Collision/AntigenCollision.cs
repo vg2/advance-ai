@@ -24,7 +24,7 @@ public class AntigenCollision : MonoBehaviour
             //Output the message
             if (collision.gameObject != null)
             {
-                Destroy(collision.gameObject);
+               // Destroy(collision.gameObject);
             }
             Debug.Log("Bots collided");
         }
