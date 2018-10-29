@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//Author: Martin Mese
 
-public class AntigenCollision : MonoBehaviour
-{
+public class AntibodyCollision : MonoBehaviour {
 
     private Random r;
 
@@ -13,14 +11,16 @@ public class AntigenCollision : MonoBehaviour
     {
         //Output the Collider's GameObject's name
         Debug.Log(collision.collider.name);
-       
+
     }
 
     //If your GameObject keeps colliding with another GameObject with a Collider, do something
     void OnCollisionStay(Collision collision)
     {
 
-        if (collision.collider.tag == "antibody")
+        r = new Random();
+        //Check to see if the Collider's name is "Chest"
+        if (collision.collider.tag == "antigen")
         {
             //Output the message
             if (collision.gameObject != null)
@@ -29,8 +29,9 @@ public class AntigenCollision : MonoBehaviour
                 {
                     Destroy(collision.gameObject);
                 }
-                Debug.Log("Antigen Collided with Antibody");
+                Debug.Log("Antibody Collided with Antigen");
             }
         }
+        
     }
 }
