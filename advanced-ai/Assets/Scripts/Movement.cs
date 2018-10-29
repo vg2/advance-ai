@@ -220,7 +220,7 @@ public class Movement : MonoBehaviour {
         
     }
 
-    private Detector CreateDetector(List<OrigamiRobot> team)
+    private Detector CreateDetector(OrigamiRobot robotDetected)
     {
         Detector d = new Detector();
 
