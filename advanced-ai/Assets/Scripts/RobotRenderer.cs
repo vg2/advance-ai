@@ -14,7 +14,7 @@ public class RobotRenderer : MonoBehaviour
     void Start()
     {
 
-        for (int x = 0; x < 20; x++)
+        for (int x = 0; x < 50; x++)
         {
             Instantiate(triangleB, new Vector3(-140, 12, 140), Quaternion.identity);
             Instantiate(triangleA, new Vector3(-140, 12, 140), Quaternion.identity);
