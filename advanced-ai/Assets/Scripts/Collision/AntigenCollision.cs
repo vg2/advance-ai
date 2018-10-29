@@ -28,7 +28,7 @@ public class AntigenCollision : MonoBehaviour
     private void Update()
     {
         GameObject[] objects= GameObject.FindGameObjectsWithTag("antigen");
-        n_antibodies.text ="Antigens: "+ objects.Length.ToString();
+        n_antigens.text ="Antigens: "+ objects.Length.ToString();
 
         GameObject[] objects2 = GameObject.FindGameObjectsWithTag("antibody");
         n_antibodies.text = "Antibodies: " + objects2.Length.ToString();
