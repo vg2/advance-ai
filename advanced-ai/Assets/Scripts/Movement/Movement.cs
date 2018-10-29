@@ -119,7 +119,7 @@ public class Movement {
         }
 
         //We have finally reached a decision node.
-        ExecuteMove(r);
+        ExecuteMoveExecuteMove(r);
     }
 
     private bool IsStateOfRobot(DecisionTree.State state, OrigamiRobot r)
