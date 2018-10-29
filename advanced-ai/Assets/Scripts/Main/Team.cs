@@ -20,7 +20,7 @@ namespace Assets.Scripts
         {
             _robots = new List<OrigamiRobot>();
 
-            for (int i = 0; i < GameObject.FindGameObjectsWithTag("UpTag").Length; i++)
+            for(int i = 0; i < GameObject.FindGameObjectsWithTag("UpTag").Length; i++)
             {
                 GameObject tile = GameObject.FindGameObjectsWithTag("UpTag")[i];
 
@@ -56,10 +56,10 @@ namespace Assets.Scripts
 
         public void DeactivateDeadRobots()
         {
-            for (int i = 0; i < _robots.Count; i++)
+            for(int i = 0; i < _robots.Count; i++)
             {
                 // Check robot health
-                // If 0 deactivate
+                    // If 0 deactivate
             }
         }
 
