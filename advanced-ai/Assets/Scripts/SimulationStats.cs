@@ -13,6 +13,6 @@ public class SimulationStats : MonoBehaviour {
 	void Update () {
 
         n_antigen.text =  (counter + 1).ToString();
-
+            
     }
 }
