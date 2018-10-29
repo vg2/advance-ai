@@ -104,7 +104,7 @@ public class Movement : MonoBehaviour {
     // ---------------------------------------- LG ----------------------------------------------
     private struct Detector
     {
-        float detected;
+        Vector3[] detected;
         bool friend;
     }
 
@@ -122,33 +122,67 @@ public class Movement : MonoBehaviour {
         return Postions;
     }
 
-    private OrigamiRobot EvaluateMove(char team)
+    private int[] antibodyEncoding(OrigamiRobot[] origamiRobots)
+    {
+        int[] antibody;
+        if (origamiRobots.Length < 1)
+        {
+            antibody = null;
+        }
+        else
+        {
+            antibody = new int[origamiRobots.Length];
+            // populate it by iterating orgami robots
+            for (int i = 0; i < origamiRobots.Length; i++)
+            {
+                if (origamiRobots[i].GetTeam() == 1 )
+                {
+                    antibody[i] = ;
+                }
+                else
+                {
+
+                }
+               
+            }
+        }
+        
+
+        // iterate the whole string and find what is important for the 
+        return antibody;
+    }
+
+    private OrigamiRobot EvaluateMove(int[] antibody)
     {
         OrigamiRobot newOR = null;
         // Perform rotation check
 
-        NSA(team);
+        NSA(antibody);
 
         // perform next movement
         return newOR;
         
     }
 
-    private void NSA(char team)
+    private void NSA(int[] antibody)
     {
         // generate detections
-        if (team == 'a')
+        for (int i = 0; i < antibody.Length; i++)
         {
-            // generate detectors for team a
-            CreateDetector(teamA);
-        }
-        else 
-        if(team == 'b')
-        {
-            // generate detectors for team b
-            CreateDetector(teamB);
+            if (antibody[i] == 1)
+            {
+                // generate detectors for team a
+                CreateDetector(teamA);
+            }
+            else
+            if (antibody[i] == 0)
+            {
+                // generate detectors for team b
+                CreateDetector(teamB);
 
+            }
         }
+        
     }
 
     private Detector CreateDetector(List<OrigamiRobot> team)
