@@ -176,6 +176,7 @@ public class Movement {
 
     private void ExecuteMove(OrigamiRobot r)
     {
+        RandomNumber(0, 10);
 
     }
 
@@ -240,7 +241,7 @@ public class Movement {
                     antibody[i] = 0;
                     teamB.Add(origamiRobots[i]);
                 }
-
+                EvaluateMove(antibody);
             }
         }
 
