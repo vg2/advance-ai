@@ -24,7 +24,7 @@ public class DecisionTree
     }
 
     //-- Initializes the tree with random values. --//
-    public void RandomInit()
+    private void RandomInit()
     {
         int currentDepth = 0;
         Grow(root, currentDepth + 1);
