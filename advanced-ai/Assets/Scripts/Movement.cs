@@ -137,11 +137,11 @@ public class Movement : MonoBehaviour {
             {
                 if (origamiRobots[i].GetTeam() == 1 )
                 {
-                    antibody[i] = ;
+                    antibody[i] = 1;
                 }
                 else
                 {
-
+                    antibody[i] = 0;
                 }
                
             }
