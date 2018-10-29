@@ -109,9 +109,9 @@ public class Movement : MonoBehaviour {
     }
 
 
-    public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots, OrigamiRobot[] OrTeam)
+    public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots)
     {
-        Vector3[] Postions = new Vector3[OrTeam.Length];
+        Vector3[] Postions = new Vector3[AllRobots.Length];
         //Perform look around for each Oragami robot and insert new postion into Postions
         // Performing a Team check
 
