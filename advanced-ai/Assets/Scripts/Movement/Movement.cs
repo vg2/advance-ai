@@ -174,6 +174,12 @@ public class Movement {
         return true;
     }
 
+    private void ExecuteMove(OrigamiRobot r)
+    {
+
+    }
+
+
     private void PerformCollison()
     {
         //----------------------------------------------------------------------------------------- (on hold for now)
@@ -246,7 +252,7 @@ public class Movement {
     {
         // sends an ine for the number of searched values
         int decsion = 0;
-        int currentTeam = ;
+        int currentTeam = RandmNumber(1);
         for (int i = 0; i < origamiRobots.Length; i++)
         {
             if ((Math.Abs(origamiRobots[i].GetPosition().x - currentRobot.GetPosition().x) <= 5) &&
@@ -296,7 +302,7 @@ public class Movement {
     }
     
 
-    private Detector CreateDetector(OrigamiRobot robotDetected)
+    private Detector CreateDetector(List<OrigamiRobot> robotDetected)
     {
         Detector d = new Detector();
         return d;
