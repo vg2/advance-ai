@@ -13,6 +13,8 @@ public class Movement : MonoBehaviour {
     private int Aggression;
     private List<OrigamiRobot> teamA;
     private List<OrigamiRobot> teamB;
+    private static int stimmilation = 2;
+    private System.Random rnd;
 
     private int RandomNumber(int Min, int Max)
     {
@@ -122,7 +124,7 @@ public class Movement : MonoBehaviour {
         return Postions;
     }
 
-    private int[] antibodyEncoding(OrigamiRobot[] origamiRobots)
+    private int[] antibodyEncoding(OrigamiRobot[] origamiRobots, OrigamiRobot currentRobot)
     {
         int[] antibody;
         if (origamiRobots.Length < 1)
@@ -137,19 +139,33 @@ public class Movement : MonoBehaviour {
             {
                 if (origamiRobots[i].GetTeam() == 1 )
                 {
-                    antibody[i] = 1;
+
+                    if (checkDistance(origamiRobots, currentRobot) > stimmilation)
+                    {
+                        antibody[i] = 1;
+                        teamA.Add(origamiRobots[i]);
+                    }
+                    
                 }
                 else
                 {
                     antibody[i] = 0;
+                    teamB.Add(origamiRobots[i]);
                 }
                
             }
         }
         
-
         // iterate the whole string and find what is important for the 
         return antibody;
+    }
+
+    private int checkDistance(OrigamiRobot[] origamiRobots, OrigamiRobot currentRobot)
+    {
+        // sends an ine for the number of searched values
+        int decsion = 0;
+
+        return decsion;
     }
 
     private OrigamiRobot EvaluateMove(int[] antibody)
@@ -193,12 +209,12 @@ public class Movement : MonoBehaviour {
     }
 
 
-
-
     // Use this for initialization
     void Start () {
-		
-	}
+        rnd = new System.Random();
+        teamA = new List<OrigamiRobot>();
+        teamB = new List<OrigamiRobot>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
