@@ -11,13 +11,15 @@ public class Movement {
      * Behavour Parameters : Aggression - biases the bots to attack over run
     */
     private int Aggression;
-    DecisionTree movementStrategy; //Sequence of steps that the robot follows to make a movement decision.
-    List<OrigamiRobot> robots;
+    private List<OrigamiRobot> teamA;
+    private List<OrigamiRobot> teamB;
+    private static int stimmilation = 2;
+    private System.Random rnd;
+    private List<Detector> detectorList;
 
-    public Movement(int treeDepth)
+    private int RandmNumber(int value)
     {
-        //Instantiate the three with the desired depth.
-        movementStrategy = new DecisionTree(treeDepth);
+        return rnd.Next(value);
     }
 
     private int RandomNumber(int Min, int Max)
@@ -25,6 +27,14 @@ public class Movement {
         System.Random r = new System.Random();
         int value = r.Next(Min, Max);
         return value;
+    }
+    DecisionTree movementStrategy; //Sequence of steps that the robot follows to make a movement decision.
+    List<OrigamiRobot> robots;
+
+    public Movement(int treeDepth)
+    {
+        //Instantiate the three with the desired depth.
+        movementStrategy = new DecisionTree(treeDepth);
     }
 
     // MoveRobots
