@@ -16,6 +16,11 @@ public class Movement : MonoBehaviour {
     private static int stimmilation = 2;
     private System.Random rnd;
 
+    private int RandmNumber(int value)
+    {
+        return rnd.Next (value);
+    }
+
     private int RandomNumber(int Min, int Max)
     {
         System.Random r = new System.Random();
@@ -24,70 +29,69 @@ public class Movement : MonoBehaviour {
     }
 
     // MoveRobots
-    public void MoveRobots(OrigamiRobot[] or)
-    {
-        List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
-        List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
+    //public void MoveRobots(OrigamiRobot[] or)
+    //{
+    //    List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
+    //    List<Vector3> TeamBPositions; // will be the next postion of every robot in team B
 
-        // ---------------------------------------- SS ----------------------------------------------
-        /*
-         *Description: Split into team A and team B
-         * Collect postions of robots per team and perform movement (MovementStratGeneration)
-         */
+    //    // ---------------------------------------- SS ----------------------------------------------
+    //    /*
+    //     *Description: Split into team A and team B
+    //     * Collect postions of robots per team and perform movement (MovementStratGeneration)
+    //     */
 
-        //-- Split into Team A and Team B and collect positions of the robots. --//
-        teamA = new List<OrigamiRobot>();
-        teamB = new List<OrigamiRobot>();
-        TeamAPositions = new List<Vector3>();
-        TeamBPositions = new List<Vector3>();
+    //    //-- Split into Team A and Team B and collect positions of the robots. --//
+    //    teamA = new List<OrigamiRobot>();
+    //    teamB = new List<OrigamiRobot>();
+    //    TeamAPositions = new List<Vector3>();
+    //    TeamBPositions = new List<Vector3>();
 
-        for (int i = 0; i < or.Length; i++)
-        {
-            if (or[i].GetTeam() == 0)
-            {
-                //Robot belongs to Team A.
-                teamA.Add(or[i]);
-                TeamAPositions.Add(or[i].GetPosition());
-            }
+    //    for (int i = 0; i < or.Length; i++)
+    //    {
+    //        if (or[i].GetTeam() == 0)
+    //        {
+    //            //Robot belongs to Team A.
+    //            teamA.Add(or[i]);
+    //            TeamAPositions.Add(or[i].GetPosition());
+    //        }
 
-            else
-            {
-                //Robot belongs to Team B.
-                teamB.Add(or[i]);
-                TeamBPositions.Add(or[i].GetPosition());
-            }  
-        }
+    //        else
+    //        {
+    //            //Robot belongs to Team B.
+    //            teamB.Add(or[i]);
+    //            TeamBPositions.Add(or[i].GetPosition());
+    //        }  
+    //    }
 
-        //-- TOD: Move robots using decision tree. --//
+    //    //-- TOD: Move robots using decision tree. --//
 
 
-        // ------------------------------------------------------------------------------------------ // End
+    //    // ------------------------------------------------------------------------------------------ // End
 
-        // ---------------------------------------- FC ----------------------------------------------
-        // update all postions
-        if (AntigenStimmulation())
-        {
-            PerformCollison();
-        }
+    //    // ---------------------------------------- FC ----------------------------------------------
+    //    // update all postions
+    //    if (AntigenStimmulation())
+    //    {
+    //        PerformCollison();
+    //    }
         
-        // Perform collision where robots are moving into the same postion
-        // ------------------------------------------------------------------------------------------ // End
+    //    // Perform collision where robots are moving into the same postion
+    //    // ------------------------------------------------------------------------------------------ // End
 
-        //check collision distance between bots
+    //    //check collision distance between bots
 
-        //for(Vector3 botAPosition : TeamAPostions)
-        //{
-        //    for(Vector3 botBPosition : TeamBPostions)
-        //    {
-        //        distance = Vector3.Distance(botAPosition, botBPosition);
-        //        if(distance <= minCollisionDistance){
-        //            Collision.Collide(botAPosition, botBPosition);
-        //        }
-        //    }
-        //}
+    //    //for(Vector3 botAPosition : TeamAPostions)
+    //    //{
+    //    //    for(Vector3 botBPosition : TeamBPostions)
+    //    //    {
+    //    //        distance = Vector3.Distance(botAPosition, botBPosition);
+    //    //        if(distance <= minCollisionDistance){
+    //    //            Collision.Collide(botAPosition, botBPosition);
+    //    //        }
+    //    //    }
+    //    //}
 
-    }
-
+    //}
 
     private bool AntigenStimmulation()
     {
@@ -109,7 +113,6 @@ public class Movement : MonoBehaviour {
         Vector3[] detected;
         bool friend;
     }
-
 
     public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots)
     {
