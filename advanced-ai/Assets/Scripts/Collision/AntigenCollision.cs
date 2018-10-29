@@ -19,12 +19,12 @@ public class AntigenCollision : MonoBehaviour
     {
 
         //Check to see if the Collider's name is "Chest"
-        if (collision.collider.tag == "Untagged")
+        if (collision.collider.tag == "antigen")
         {
             //Output the message
             if (collision.gameObject != null)
             {
-               // Destroy(collision.gameObject);
+                Destroy(collision.gameObject);
             }
             Debug.Log("Bots collided");
         }
