@@ -29,7 +29,7 @@ public class Movement : MonoBehaviour {
         return value;
     }
 
-    MoveRobots
+    //MoveRobots
     public void MoveRobots(OrigamiRobot[] or)
     {
         List<Vector3> TeamAPositions; // will be the next postion of every robot in team A
