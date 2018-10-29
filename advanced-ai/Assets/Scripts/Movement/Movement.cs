@@ -169,25 +169,30 @@ public class Movement {
         throw new Exception("Robot is in an invalid state");
     }
 
-    /*
-     * Part of the "update positions" sections for FC
-     */
-    private void ExecuteMove(OrigamiRobot r)
+    private bool AntigenStimmulation()
     {
-        
+        return true;
+    }
+
+    private void PerformCollison()
+    {
+        //----------------------------------------------------------------------------------------- (on hold for now)
+        // create and initalise Collision Class
+        //TBD
+
+        //----------------------------------------------------------------------------------------- // End
     }
 
     // ---------------------------------------- LG ----------------------------------------------
     private struct Detector
     {
-        float detected;
-        bool friend; 
+        Vector3[] detected;
+        bool friend;
     }
 
-
-    public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots, OrigamiRobot[] OrTeam)
+    public Vector3[] MovementStratGeneration(OrigamiRobot[] AllRobots)
     {
-        Vector3[] Postions = new Vector3[OrTeam.Length];
+        Vector3[] Postions = new Vector3[AllRobots.Length];
         //Perform look around for each Oragami robot and insert new postion into Postions
         // Performing a Team check
 
@@ -198,56 +203,118 @@ public class Movement {
         return Postions;
     }
 
-    private OrigamiRobot EvaluateMove(char team)
+    private int[] antibodyEncoding(OrigamiRobot[] origamiRobots, OrigamiRobot currentRobot)
+    {
+        int[] antibody;
+        if (origamiRobots.Length < 1)
+        {
+            antibody = null;
+        }
+        else
+        {
+            antibody = new int[origamiRobots.Length];
+            // populate it by iterating orgami robots
+            for (int i = 0; i < origamiRobots.Length; i++)
+            {
+                if (origamiRobots[i].GetTeam() != currentRobot.GetTeam())
+                {
+
+                    if (!(checkDistance(origamiRobots, currentRobot) > stimmilation))
+                    {
+                        antibody[i] = 1;
+                        teamA.Add(origamiRobots[i]);
+                    }
+                    else
+                    {
+                        antibody[i] = 0;
+                    }
+                }
+                else
+                {
+                    antibody[i] = 0;
+                    teamB.Add(origamiRobots[i]);
+                }
+
+            }
+        }
+
+        // iterate the whole string and find what is important for the 
+        return antibody;
+    }
+
+    private int checkDistance(OrigamiRobot[] origamiRobots, OrigamiRobot currentRobot)
+    {
+        // sends an ine for the number of searched values
+        int decsion = 0;
+        int currentTeam = ;
+        for (int i = 0; i < origamiRobots.Length; i++)
+        {
+            if ((Math.Abs(origamiRobots[i].GetPosition().x - currentRobot.GetPosition().x) <= 5) &&
+                 (Math.Abs(origamiRobots[i].GetPosition().z - currentRobot.GetPosition().z) <= 5) &&
+                 (Math.Abs(origamiRobots[i].GetPosition().y - currentRobot.GetPosition().y) <= 5) &&
+                 (origamiRobots[i].GetTeam() != currentRobot.GetTeam()))
+            {
+                decsion++;
+            }
+
+        }
+        return decsion;
+    }
+
+    private OrigamiRobot EvaluateMove(int[] antibody)
     {
         OrigamiRobot newOR = null;
         // Perform rotation check
 
-        NSA(team);
+        NSA(antibody);
 
         // perform next movement
         return newOR;
-        
+
     }
 
-    private void NSA(char team)
+    private void NSA(int[] antibody)
     {
         // generate detections
-        if (team == 'a')
+        for (int i = 0; i < antibody.Length; i++)
         {
-            // generate detectors for team a
-           // CreateDetector(teamA);
-        }
-        else 
-        if(team == 'b')
-        {
-            // generate detectors for team b
-          //  CreateDetector(teamB);
+            if (antibody[i] == 1)
+            {
+                // generate detectors for team a
+                detectorList.Add(CreateDetector(teamA));
 
+            }
+            else
+            if (antibody[i] == 0)
+            {
+                // generate detectors for team b
+                detectorList.Add(CreateDetector(teamB));
+
+            }
         }
+
     }
+    
 
-    private Detector CreateDetector(List<OrigamiRobot> team)
+    private Detector CreateDetector(OrigamiRobot robotDetected)
     {
         Detector d = new Detector();
-
         return d;
     }
 
-    //----------------------------------------------------------------------------------------- (on hold for now)
-    // create and initalise Collision Class
-    //TBD
-
-    //----------------------------------------------------------------------------------------- // End
-
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Start()
+    {
+        rnd = new System.Random();
+        teamA = new List<OrigamiRobot>();
+        teamB = new List<OrigamiRobot>();
+        detectorList = new List<Detector>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
